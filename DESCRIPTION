@@ -1,0 +1,16 @@
+Package: myFunctions
+Title: Collezione di funzioni
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = 'Marco',
+           family = 'Garzitto',
+           role = c('aut', 'cre'),
+           email = 'marcogarzitto@gmail.com',
+           comment = c(ORCID = 'https://orcid.org/0000-0001-7565-420X'))
+Description: Collezione di funzioni (magari alla rinfusa).
+License: `use_mit_license()`, `use_gpl3_license()`
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Depends: xlsx, car, psych, tidyverse, Hmisc
