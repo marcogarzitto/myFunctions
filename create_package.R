@@ -20,3 +20,8 @@
 # devtools::install_github('marcogarzitto/myFunctions')
 
 #
+
+# install.packages(c('rJava', 'xlsx', 'car', 'psych', 'tidyverse', 'Hmisc'), dep = TRUE)
+# update.packages(ask = 'graphics', checkBuilt = TRUE)
+
+#
