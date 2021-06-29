@@ -35,7 +35,7 @@ give_nice <- function (text = '', value = NA, decimals = 3, with_equal_sign = FA
    value <- max_value
   } else
   {
-   if (round(value, decimals) >= round(max_value, decimals))
+   if (round(value, decimals) == round(max_value, decimals))
    {
     result <- paste('>', sign, floor(max_value), '.', paste(rep(0, decimals - 1), collapse = ''), '1', sep = '')
     equal_sign <- ''
