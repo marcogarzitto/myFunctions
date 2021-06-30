@@ -22,3 +22,25 @@ add_categorical_variable_from_raw_input <- function (name_in = '', acronym = '',
         Hmisc::label(OUT) <- paste(acronym, if (acronym != '') { ', ' }, variable_description, '[', paste(levels_out, collapse = '/'), ']', sep = '')
  return(OUT)
 }
+
+#' add_date_variable_from_raw_input
+#'
+#' Funzione per ottenere una variabile categorica a partire da un input di inserimento.
+#'
+#' @param value Valore numerico.
+#' @param decimals Numero di decimali da mostrare.
+#' @param acronym Nome (sigla) della variabile nel data-frame di input.
+#' @param name_in Nome lungo (descrizione) della variabile nel data-frame di input.
+#' @param variable_description Nome lungo o descrizione della variabile.
+#' @param df_in Data-frame di inpunt.
+#' @return Un vettore (utile per inserirlo in un data-frame).
+#' @export
+add_date_variable_from_raw_input <- function (name_in = '', acronym = '', variable_description = '', df_in = IN)
+{
+ OUT <- as.Date(IN$birth, '%Y-%m-%d')
+ min_date <- as.character(format(min(OUT, na.rm = TRUE), '%d.%m.%Y'))
+ max_date <- as.character(format(max(OUT, na.rm = TRUE), '%d.%m.%Y'))
+ OUT <- as.character(format(OUT, '%d.%m.%Y'))
+        Hmisc::label(OUT) <- paste(acronym, if (acronym != '') { ', ' }, variable_description, '[', min_date, ' , ', max_date, ']', sep = '')
+ return(OUT)
+}
