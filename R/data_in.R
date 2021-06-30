@@ -19,6 +19,6 @@ add_categorical_variable_from_raw_input <- function (name_in = '', acronym = '',
  OUT <- ordered(df_in[, c(name_in)], levels = levels_in)
         levels(OUT) <- levels_out
         if (length(levels_out) > 1) { contrasts(OUT) <- contr.treatment(length(levels_out), base = 1) }
-        Hmisc::label(OUT) <- paste(acronym, if (acronym != '') { ', ' }, variable_description, '[', (levels_out, collapse = '/') ']', sep = '')
+        Hmisc::label(OUT) <- paste(acronym, if (acronym != '') { ', ' }, variable_description, '[', paste(levels_out, collapse = '/'), ']', sep = '')
  return(OUT)
 }

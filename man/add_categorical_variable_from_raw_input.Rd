@@ -6,6 +6,7 @@
 \usage{
 add_categorical_variable_from_raw_input(
   name_in = "",
+  acronym = "",
   variable_description = "",
   levels_in = c(),
   levels_out = c(),
@@ -13,7 +14,9 @@ add_categorical_variable_from_raw_input(
 )
 }
 \arguments{
-\item{name_in}{Nome della variabile nel data-frame di input.}
+\item{name_in}{Nome lungo (descrizione) della variabile nel data-frame di input.}
+
+\item{acronym}{Nome (sigla) della variabile nel data-frame di input.}
 
 \item{variable_description}{Nome lungo o descrizione della variabile.}
 
