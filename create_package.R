@@ -21,6 +21,7 @@
 
 #
 
+# Depends: rJava, xlsx, car, psych, tidyverse, Hmisc
 # install.packages(c('rJava', 'xlsx', 'car', 'psych', 'tidyverse', 'Hmisc'), dep = TRUE)
 # update.packages(ask = 'graphics', checkBuilt = TRUE)
 
