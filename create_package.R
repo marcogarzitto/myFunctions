@@ -21,8 +21,8 @@
 
 #
 
-# Depends: extrafont, magrittr, Hmisc, officer, rJava, xlsx, car, psych, tidyverse
-# install.packages(c('extrafont', 'magrittr', 'Hmisc', 'officer', 'rJava', 'xlsx', 'car', 'psych', 'tidyverse'), dep = TRUE)
+# Depends: extrafont, magrittr, Hmisc, officer, rJava, xlsx, car, psych, tidyverse, sciplot
+# install.packages(c('extrafont', 'magrittr', 'Hmisc', 'officer', 'rJava', 'xlsx', 'car', 'psych', 'tidyverse', 'sciplot'), dep = TRUE)
 # update.packages(ask = 'graphics', checkBuilt = TRUE)
 
 #
