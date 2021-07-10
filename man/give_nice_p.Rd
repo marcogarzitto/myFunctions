@@ -42,6 +42,6 @@ give_nice_p(
 Una stringa rappresentante il valore di p, con vari abbellimenti.
 }
 \description{
-Funzione rappresentare i valori di p.
+Funzione per rappresentare i valori di p.
 Comprende gli asterischi per la significatività statistica.
 }

@@ -27,5 +27,5 @@ give_nice_r(
 Una stringa rappresentante il valore di r, con vari abbellimenti.
 }
 \description{
-Funzione rappresentare i valori di r.
+Funzione per rappresentare i valori di r.
 }

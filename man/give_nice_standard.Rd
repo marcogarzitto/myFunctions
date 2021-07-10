@@ -28,19 +28,19 @@ give_nice_standard(
 
 \item{standard_sd}{SD del punteggio standard.}
 
+\item{min_value}{Punteggio minimo rappresentabile.}
+
+\item{max_value}{Punteggio massimo rappresentabile.}
+
 \item{with_equal_sign}{Segno di uguale (sempre presente se c'è il testo).}
 
 \item{with_sign}{Segno di +/- davanti al numero.}
 
 \item{void_string}{Stringa da usare se il numero non c'è.}
-
-\item{min_z}{Punteggio minimo rappresentabile.}
-
-\item{max_z}{Punteggio massimo rappresentabile.}
 }
 \value{
 Una stringa rappresentante il valore T, con vari abbellimenti.
 }
 \description{
-Funzione rappresentare i valori Standard (100, 15).
+Funzione per rappresentare i valori Standard (100, 15).
 }

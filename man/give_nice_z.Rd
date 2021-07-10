@@ -42,5 +42,5 @@ give_nice_z(
 Una stringa rappresentante il valore z, con vari abbellimenti.
 }
 \description{
-Funzione rappresentare i valori z (ma applicabile anche ad altre standardizzazioni).
+Funzione per rappresentare i valori z (ma applicabile anche ad altre standardizzazioni).
 }
