@@ -72,7 +72,7 @@ give_nice <- function (value = NA, decimals = 3, text = '', with_equal_sign = FA
 
 #' give_nice_p
 #'
-#' Funzione rappresentare i valori di p.
+#' Funzione per rappresentare i valori di p.
 #' Comprende gli asterischi per la significatività statistica.
 #'
 #' @param value Valore numerico.
@@ -107,7 +107,7 @@ give_nice_p <- function (value = NA, decimals = 3, with_p = TRUE, with_equal_sig
 
 #' give_nice_r
 #'
-#' Funzione rappresentare i valori di r.
+#' Funzione per rappresentare i valori di r.
 #'
 #' @param value Valore numerico.
 #' @param decimals Numero di decimali da mostrare.
@@ -127,7 +127,7 @@ give_nice_r <- function (value = NA, decimals = 3, with_r = TRUE, with_equal_sig
 
 #' give_nice_z
 #'
-#' Funzione rappresentare i valori z (ma applicabile anche ad altre standardizzazioni).
+#' Funzione per rappresentare i valori z (ma applicabile anche ad altre standardizzazioni).
 #'
 #' @param value Valore numerico.
 #' @param decimals Numero di decimali da mostrare.
@@ -152,15 +152,15 @@ give_nice_z <- function (value = NA, decimals = 3, text = '', standard_mean = 0,
 
 #' give_nice_t
 #'
-#' Funzione rappresentare i valori T (50, 10).
+#' Funzione per rappresentare i valori T (50, 10).
 #'
 #' @param value Valore numerico.
 #' @param decimals Numero di decimali da mostrare.
 #' @param text Testo da mostrare prima del valore.
 #' @param standard_mean Media del punteggio standard.
 #' @param standard_sd SD del punteggio standard.
-#' @param min_z Punteggio minimo rappresentabile.
-#' @param max_z Punteggio massimo rappresentabile.
+#' @param min_value Punteggio minimo rappresentabile.
+#' @param max_value Punteggio massimo rappresentabile.
 #' @param with_equal_sign Segno di uguale (sempre presente se c'è il testo).
 #' @param with_sign Segno di +/- davanti al numero.
 #' @param void_string Stringa da usare se il numero non c'è.
@@ -175,15 +175,15 @@ give_nice_t <- function (value = NA, decimals = 1, text = 'T', standard_mean = 5
 
 #' give_nice_standard
 #'
-#' Funzione rappresentare i valori Standard (100, 15).
+#' Funzione per rappresentare i valori Standard (100, 15).
 #'
 #' @param value Valore numerico.
 #' @param decimals Numero di decimali da mostrare.
 #' @param text Testo da mostrare prima del valore.
 #' @param standard_mean Media del punteggio standard.
 #' @param standard_sd SD del punteggio standard.
-#' @param min_z Punteggio minimo rappresentabile.
-#' @param max_z Punteggio massimo rappresentabile.
+#' @param min_value Punteggio minimo rappresentabile.
+#' @param max_value Punteggio massimo rappresentabile.
 #' @param with_equal_sign Segno di uguale (sempre presente se c'è il testo).
 #' @param with_sign Segno di +/- davanti al numero.
 #' @param void_string Stringa da usare se il numero non c'è.
@@ -193,6 +193,30 @@ give_nice_standard <- function (value = NA, decimals = 1, text = 'Standard', sta
 {
  if (text != '') { with_equal_sign = TRUE }
  result <- give_nice(text = text, value = value, decimals = decimals, with_equal_sign = with_equal_sign, with_sign = TRUE, min_value = min_value, max_value = max_value, void_string = void_string)
+ return(result)
+}
+
+#' give_nice_percent
+#'
+#' Funzione rappresentare le percentuali.
+#'
+#' @param value Valore numerico.
+#' @param decimals Numero di decimali da mostrare.
+#' @param text Testo da mostrare prima del valore.
+#' @param percent_sign Segno di percentuale da usare.
+#' @param min_value Punteggio minimo rappresentabile.
+#' @param max_value Punteggio massimo rappresentabile.
+#' @param with_equal_sign Segno di uguale (sempre presente se c'è il testo).
+#' @param with_sign Segno di +/- davanti al numero.
+#' @param void_string Stringa da usare se il numero non c'è.
+#' @return Una stringa rappresentante il valore T, con vari abbellimenti.
+#' @export
+give_nice_percent <- function (value = NA, decimals = 2, text = '', percent_sign = TRUE, min_value = 0, max_value = 100, with_equal_sign = FALSE, with_sign = FALSE, void_string = '-')
+{
+ if (text != '') { with_equal_sign = TRUE }
+ if (percent_sign) { percent_sign = '%' } else { percent_sign = '' }
+ result <- give_nice(text = text, value = value, decimals = decimals, with_equal_sign = with_equal_sign, with_sign = TRUE, min_value = min_value, max_value = max_value, void_string = void_string)
+ result <- paste(result, percent_sign, sep = '')
  return(result)
 }
 
