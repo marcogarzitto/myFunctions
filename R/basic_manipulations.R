@@ -24,3 +24,5 @@ give_mean_confidence_intervals <- function (x, confidence = 0.950, distribution 
           ymin = x$mean - plus_minus,
           ymax = x$mean + plus_minus))
 }
+
+#

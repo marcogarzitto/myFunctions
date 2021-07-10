@@ -1,6 +1,6 @@
 #' add_categorical_variable_from_raw_input
 #'
-#' Funzione per ottenere una variabile categorica a partire da un input di inserimento.
+#' Funzione per ottenere una variabile categoriale a partire da un input di inserimento.
 #'
 #' @param value Valore numerico.
 #' @param decimals Numero di decimali da mostrare.
@@ -25,7 +25,7 @@ add_categorical_variable_from_raw_input <- function (name_in = '', acronym = '',
 
 #' add_date_variable_from_raw_input
 #'
-#' Funzione per ottenere una variabile categorica a partire da un input di inserimento.
+#' Funzione per ottenere una variabile data (formattata come stringa) a partire da un input di inserimento (xlsx).
 #'
 #' @param value Valore numerico.
 #' @param decimals Numero di decimali da mostrare.
@@ -44,3 +44,5 @@ add_date_variable_from_raw_input <- function (name_in = '', acronym = '', variab
         Hmisc::label(OUT) <- paste(acronym, if (acronym != '') { ', ' }, variable_description, '[', min_date, ' , ', max_date, ']', sep = '')
  return(OUT)
 }
+
+#
