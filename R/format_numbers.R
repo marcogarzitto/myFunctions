@@ -215,7 +215,7 @@ give_nice_percent <- function (value = NA, decimals = 2, text = '', percent_sign
 {
  if (text != '') { with_equal_sign = TRUE }
  if (percent_sign) { percent_sign = '%' } else { percent_sign = '' }
- result <- give_nice(text = text, value = value, decimals = decimals, with_equal_sign = with_equal_sign, with_sign = TRUE, min_value = min_value, max_value = max_value, void_string = void_string)
+ result <- give_nice(text = text, value = value, decimals = decimals, with_equal_sign = with_equal_sign, with_sign = with_sign, min_value = min_value, max_value = max_value, void_string = void_string)
  result <- paste(result, percent_sign, sep = '')
  return(result)
 }
