@@ -28,5 +28,5 @@ add_date_variable_from_raw_input(
 Un vettore (utile per inserirlo in un data-frame).
 }
 \description{
-Funzione per ottenere una variabile categorica a partire da un input di inserimento.
+Funzione per ottenere una variabile data (formattata come stringa) a partire da un input di inserimento (xlsx).
 }

@@ -3,6 +3,7 @@
 export(add_categorical_variable_from_raw_input)
 export(add_date_variable_from_raw_input)
 export(arrotonda)
+export(give_continuous_description)
 export(give_mean_confidence_intervals)
 export(give_nice)
 export(give_nice_p)

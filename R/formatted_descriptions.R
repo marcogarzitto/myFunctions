@@ -2,28 +2,36 @@
 #'
 #' Funzione rappresentare le percentuali.
 #'
-#' @param value Valore numerico.
-#' @param decimals Numero di decimali da mostrare.
-#' @param text Testo da mostrare prima del valore.
-#' @param percent_sign Segno di percentuale da usare.
-#' @param min_value Punteggio minimo rappresentabile.
-#' @param max_value Punteggio massimo rappresentabile.
-#' @param with_equal_sign Segno di uguale (sempre presente se c'è il testo).
-#' @param with_sign Segno di +/- davanti al numero.
-#' @param void_string Stringa da usare se il numero non c'è.
+#' @param x Un vettore numerico (rappresentante una variabile continua).
+#' @param void_string Stringa da usare se il valore non c'è o non è calcolabile.
 #' @return Una stringa rappresentante il valore T, con vari abbellimenti.
 #' @export
-give_continuous_description <- function (x = NA, decimals = c(2, 3), text = '', void_string = '-')
+give_continuous_description <- function (x = NA, void_string = '-')
 {
- x <- na.omit(x)
- if ((length(x) < 3) | is.na(x) | !is.numeric(x) | is.infinite(x)) { return(void_string) }
- out_n <- length()
- out_mean <- 
- out_sd <- 
- out_md <- 
- out_iqr <- 
- out_min <- 
- out_max <- 
+ X <- na.omit(x)
+ if ((length(X) < 3) | is.na(X) | !is.numeric(X) | is.infinite(X)) { return(void_string) }
+ out_n <- length(X)
+          out_n <- give_nice(value = out_n, decimals = 0, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string)
+ out_miss <- 100 * (1 - out_n) / length(x)
+             out_miss <- give_nice_percent(value = out_miss, decimals = 1, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string)
+ out_mean <- mean(X, na.rm = TRUE)
+             out_mean <- give_nice(value = out_mean, decimals = 2, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string)
+ out_sd <- sd(X, na.rm = TRUE)
+           out_sd <- give_nice(value = out_sd, decimals = 3, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string)
+ out_md <- median(X, na.rm = TRUE)
+           out_md <- give_nice(value = out_md, decimals = 1, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string)
+ out_iqr <- IQR(X, na.rm = TRUE)
+            out_iqr <- give_nice(value = out_iqr, decimals = 1, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string)
+ out_min <- min(X, na.rm = TRUE)
+            out_min <- give_nice(value = out_min, decimals = 2, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string)
+ out_max <- max(X, na.rm = TRUE)
+            out_max <- give_nice(value = out_max, decimals = 2, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string)
+ #
+ result <- c(paste(out_n, '(', out_miss, ')', sep = ''),
+             paste(out_mean, ' ', '\u00B1', out_sd, sep = ''),
+             paste(out_md, ' ', '(', out_iqr, ')', sep = ''),
+             paste('[', out_min, ' ', ',', ' ', out_max, ']', sep = ''))
+           names(result) <- c('N (missing %)', 'Mean \u00B1SD', 'Md (IQR)', '[min , Max]')
  return(result)
 }
 
