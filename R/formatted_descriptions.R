@@ -47,6 +47,7 @@ give_binary_description <- function (x = NA, void_string = '-')
 {
  X <- na.omit(x)
  if ((length(X) < 3)) { return(void_string) }
+ if (!is.factor(X)) { X <- ordered(X) }
  if (length(levels(X)) != 2) { return(void_string) }
  positive <- levels(X)[2]
  out_n <- length(X)
@@ -54,12 +55,12 @@ give_binary_description <- function (x = NA, void_string = '-')
  out_miss <- 100 * (1 - (length(X) / length(x)))
              out_miss <- give_nice_percent(value = out_miss, decimals = 1, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string)
  out_positive <- sum(X == positive)
-                 out_n <- give_nice(value = out_positive, decimals = 0, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string)
+                 out_positive <- give_nice(value = out_positive, decimals = 0, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string)
  out_positive_perc <- 100 * (sum(X == positive) / length(X))
                       out_positive_perc <- give_nice_percent(value = out_positive_perc, decimals = 1, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string)
  #
  result <- c(paste(out_n, ' ', '(', out_miss, ')', sep = ''),
-             paste(out_n, ' ', '(', out_miss, ')', sep = ''))
+             paste(out_positive, ' ', '(', out_positive_perc, ')', sep = ''))
            names(result) <- c('N (missing %)', paste(positive, ' ', '(', '%', ')', sep = ''))
  return(result)
 }
