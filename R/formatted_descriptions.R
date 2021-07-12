@@ -9,7 +9,7 @@
 give_continuous_description <- function (x = NA, void_string = '-')
 {
  X <- na.omit(x)
- if ((length(X) < 3) | is.na(X) | !is.numeric(X) | is.infinite(X)) { return(void_string) }
+ if ((length(X) < 3)) { return(void_string) }
  out_n <- length(X)
           out_n <- give_nice(value = out_n, decimals = 0, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string)
  out_miss <- 100 * (1 - out_n) / length(x)
