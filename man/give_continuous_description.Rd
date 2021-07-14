@@ -15,5 +15,5 @@ give_continuous_description(x = NA, void_string = "-")
 Un vettore con i risultati descrittivi.
 }
 \description{
-Funzione rappresentare le percentuali.
+Funzione per descrivere una variabile continua (con un vettore).
 }

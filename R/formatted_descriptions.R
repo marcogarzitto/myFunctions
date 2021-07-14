@@ -1,6 +1,6 @@
 #' give_continuous_description
 #'
-#' Funzione rappresentare le percentuali.
+#' Funzione per descrivere una variabile continua (con un vettore).
 #'
 #' @param x Un vettore numerico (rappresentante una variabile continua).
 #' @param void_string Stringa da usare se il valore non c'è o non è calcolabile.
@@ -35,33 +35,83 @@ give_continuous_description <- function (x = NA, void_string = '-')
  return(result)
 }
 
-#' give_binary_description
+#' give_categorical_description
 #'
-#' Funzione rappresentare le percentuali.
+#' Funzione per descrivere una variabile categoriale (con una tabella relativa a tutti i livelli possibili).
 #'
-#' @param x Un vettore di fattori (rappresentante una variabile binaria), convertito come tale se numerico.
+#' @param x Un vettore di fattori, convertito come tale se numerico.
+#' @param name Stringa da usare come nome della variabile (altrimenti è utilizzata l'etichetta, se presente).
 #' @param void_string Stringa da usare se il valore non c'è o non è calcolabile.
-#' @return Un vettore con i risultati descrittivi.
+#' @param list_marker Marcatore di punto elenco (per la lista dei livelli).
+#' @return Un data.frame con i risultati descrittivi.
 #' @export
-give_binary_description <- function (x = NA, void_string = '-')
+give_categorical_description <- function (x = NA, name = '', void_string = '-', list_marker = '-')
 {
- X <- na.omit(x)
- if ((length(X) < 3)) { return(void_string) }
- if (!is.factor(X)) { X <- ordered(X) }
- if (length(levels(X)) != 2) { return(void_string) }
- positive <- levels(X)[2]
+ X <- x[!is.na(x)]
+ if (name == '' | is.na(name)) { name <- Hmisc::label(X) }
+ if (!is.factor(X)) { X <- ordered(X) } 
  out_n <- length(X)
           out_n <- give_nice(value = out_n, decimals = 0, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string)
  out_miss <- 100 * (1 - (length(X) / length(x)))
              out_miss <- give_nice_percent(value = out_miss, decimals = 1, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string)
- out_positive <- sum(X == positive)
-                 out_positive <- give_nice(value = out_positive, decimals = 0, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string)
- out_positive_perc <- 100 * (sum(X == positive) / length(X))
-                      out_positive_perc <- give_nice_percent(value = out_positive_perc, decimals = 1, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string)
+ out_primary <- paste(out_n, ' ', '(', 'Missing: ', out_miss, ')', sep = '')
+ result <- c(name, out_primary)
  #
- result <- c(paste(out_n, ' ', '(', out_miss, ')', sep = ''),
-             paste(out_positive, ' ', '(', out_positive_perc, ')', sep = ''))
-           names(result) <- c('N (missing %)', paste(positive, ' ', '(', '%', ')', sep = ''))
+ for (x_level in levels(X))
+ {
+  out_positive <- sum(X == x_level)
+                  out_positive <- give_nice(value = out_positive, decimals = 0, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string)
+  out_positive_perc <- 100 * (sum(X == x_level) / length(X))
+                      out_positive_perc <- give_nice_percent(value = out_positive_perc, decimals = 1, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string)                
+  out_level <- paste(out_positive, ' ', '(', out_positive_perc, ')', sep = '')
+  result <- rbind(result,
+                  c(paste(list_marker, ' ', x_level, sep = ''), out_level))
+ }
+ row.names(result) <- NULL
+ result <- as.data.frame(result)
+ names(result) <- c('Variable', 'N (%)')
+ return(result)
+}
+
+#' give_categorical_crosstable
+#'
+#' Funzione per descrivere una variabile categoriale e il suo incrocio con un'altra di cui interessa la divisione in gruppi (con una tabella relativa a tutti i livelli possibili).
+#'
+#' @param x Un vettore di fattori, convertito come tale se numerico.
+#' @param y Un vettore di fattori, convertito come tale se numerico, con il gruppo di interesse. 
+#' @param name_x Stringa da usare come nome della variabile (altrimenti è utilizzata l'etichetta, se presente).
+#' @param void_string Stringa da usare se il valore non c'è o non è calcolabile.
+#' @param list_marker Marcatore di punto elenco (per la lista dei livelli).
+#' @return Un data.frame con i risultati descrittivi (una colonna per livello della variabile con i gruppi).
+#' @export
+give_categorical_crosstable <- function (x = NA, y = NA, name_x = '', void_string = '-', list_marker = '-')
+{
+ XY <- na.omit(data.frame(X = x, Y = y))
+ if (name_x == '' | is.na(name_x)) { name_x <- Hmisc::label(XY$X) }
+ if (!is.factor(XY$X)) { X <- ordered(XY$X) }
+ if (!is.factor(XY$Y)) { Y <- ordered(XY$Y) }
+ #
+ CROSS <- rep(c(''), length(levels(XY$Y)))
+ for (x_level in c(1:length(levels(XY$X))))
+ {
+  #
+  CROSS <- rbind(CROSS,
+                 paste(sapply(table(XY)[x_level, ], give_nice, decimals = 0, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string),
+                       ' ', '(',
+                       sapply(100 * prop.table(table(XY), 1)[x_level, ], give_nice_percent, decimals = 1, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string),
+                       ')',
+                       sep = ''))
+  CROSS <- data.frame(CROSS)
+  row.names(CROSS) <- NULL
+  names(CROSS) <- c(levels(XY$Y))
+ }
+ #
+ CHISQ <- ''
+ FISHER <- ''
+ #
+ result <- cbind(give_categorical_description(x = x, name = name_x, void_string = void_string, list_marker = list_marker),
+                 CROSS)
+ names(result) <- c('Variable', 'N (%)', levels(XY$Y))
  return(result)
 }
 
