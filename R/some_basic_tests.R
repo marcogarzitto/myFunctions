@@ -67,7 +67,7 @@ give_fisher <- function (x = NA, y = NA, void_string = '-')
                ' ',
                '(',
                give_nice(value = abs(TEST$conf.int[1]), decimals = 2, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = '-'),
-               ' , ',
+               ', ',
                give_nice(value = abs(TEST$conf.int[2]), decimals = 2, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = '-'),
                ')',
                ',',
