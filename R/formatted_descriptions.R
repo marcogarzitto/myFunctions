@@ -88,10 +88,11 @@ give_categorical_crosstable <- function (x = NA, y = NA, name_x = '', void_strin
 {
  XY <- na.omit(data.frame(X = x, Y = y))
  if (name_x == '' | is.na(name_x)) { name_x <- Hmisc::label(XY$X) }
- if (!is.factor(XY$X)) { X <- ordered(XY$X) }
- if (!is.factor(XY$Y)) { Y <- ordered(XY$Y) }
+ if (!is.factor(XY$X)) { XY$X <- ordered(XY$X) }
+ if (!is.factor(XY$Y)) { XY$Y <- ordered(XY$Y) }
  #
- CROSS <- rep(c(''), length(levels(XY$Y)))
+ CROSS <- c(rep(c(''), length(levels(XY$Y))),
+            give_categorical_test(x = XY$X, y = XY$Y, void_string = void_string))
  for (x_level in c(1:length(levels(XY$X))))
  {
   #
@@ -100,18 +101,16 @@ give_categorical_crosstable <- function (x = NA, y = NA, name_x = '', void_strin
                        ' ', '(',
                        sapply(100 * prop.table(table(XY), 1)[x_level, ], give_nice_percent, decimals = 1, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string),
                        ')',
-                       sep = ''))
+                       sep = ''),
+                 c(''))
   CROSS <- data.frame(CROSS)
   row.names(CROSS) <- NULL
-  names(CROSS) <- c(levels(XY$Y))
+  names(CROSS) <- c(c(levels(XY$Y)), 'Test')
  }
- #
- CHISQ <- ''
- FISHER <- ''
  #
  result <- cbind(give_categorical_description(x = x, name = name_x, void_string = void_string, list_marker = list_marker),
                  CROSS)
- names(result) <- c('Variable', 'N (%)', levels(XY$Y))
+ names(result) <- c('Variable', 'N (%)', levels(XY$Y), 'Test')
  return(result)
 }
 
