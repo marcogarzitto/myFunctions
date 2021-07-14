@@ -8,6 +8,7 @@ give_categorical_crosstable(
   x = NA,
   y = NA,
   name_x = "",
+  max_missed = 0.03,
   void_string = "-",
   list_marker = "-"
 )
@@ -18,6 +19,8 @@ give_categorical_crosstable(
 \item{y}{Un vettore di fattori, convertito come tale se numerico, con il gruppo di interesse.}
 
 \item{name_x}{Stringa da usare come nome della variabile (altrimenti è utilizzata l'etichetta, se presente).}
+
+\item{max_missed}{Percentuale massima ammessa di omissioni.}
 
 \item{void_string}{Stringa da usare se il valore non c'è o non è calcolabile.}
 

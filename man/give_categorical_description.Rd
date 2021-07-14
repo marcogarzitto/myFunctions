@@ -7,6 +7,7 @@
 give_categorical_description(
   x = NA,
   name = "",
+  max_missed = 0.01,
   void_string = "-",
   list_marker = "-"
 )
@@ -15,6 +16,8 @@ give_categorical_description(
 \item{x}{Un vettore di fattori, convertito come tale se numerico.}
 
 \item{name}{Stringa da usare come nome della variabile (altrimenti è utilizzata l'etichetta, se presente).}
+
+\item{max_missed}{Percentuale massima ammessa di omissioni.}
 
 \item{void_string}{Stringa da usare se il valore non c'è o non è calcolabile.}
 
