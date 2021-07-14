@@ -92,17 +92,17 @@ give_categorical_crosstable <- function (x = NA, y = NA, name_x = '', void_strin
  if (!is.factor(XY$Y)) { XY$Y <- ordered(XY$Y) }
  #
  CROSS <- c(rep(c(''), length(levels(XY$Y))),
-            give_categorical_test(x = XY$X, y = XY$Y, void_string = void_string))
+            give_chisquare(x = XY$X, y = XY$Y, void_string = void_string)[1])
  for (x_level in c(1:length(levels(XY$X))))
  {
   #
+  TEST <- give_categorical_test(x = XY$Y, y = (XY$X == levels(XY$X)[x_level]), void_string = void_string)[1]
   CROSS <- rbind(CROSS,
-                 paste(sapply(table(XY)[x_level, ], give_nice, decimals = 0, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string),
-                       ' ', '(',
-                       sapply(100 * prop.table(table(XY), 1)[x_level, ], give_nice_percent, decimals = 1, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string),
-                       ')',
-                       sep = ''),
-                 c(''))
+                 c(paste(sapply(table(XY)[x_level, ], give_nice, decimals = 0, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string),
+                         ' ', '(',
+                         sapply(100 * prop.table(table(XY), 1)[x_level, ], give_nice_percent, decimals = 1, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string),
+                         ')',
+                         sep = ''), TEST))
   CROSS <- data.frame(CROSS)
   row.names(CROSS) <- NULL
   names(CROSS) <- c(c(levels(XY$Y)), 'Test')

@@ -32,6 +32,17 @@ give_nice <- function (value = NA, decimals = 3, text = '', with_equal_sign = FA
  if (text != '') { with_equal_sign = TRUE }
  if (with_equal_sign) { equal_sign <- '=' } else { equal_sign <- '' }
  if (is.na(value) | !is.numeric(value) | is.infinite(value)) { return(paste(text, equal_sign, void_string, sep = '')) }
+ if (is.infinite(value))
+ {
+  if (is.infinite(max_value) & is.infinite(min_value))
+  {
+   return(paste(text, equal_sign, void_string, sep = ''))
+  } else
+  {
+     if (value > max_value) { value <- max_value + 1 }
+     if (value < min_value) { value <- min_value - 1 }
+  }
+ }
  if (with_sign)
  {
   if (value >= 0) { plus_sign <- '+' } else { plus_sign <- '' }
