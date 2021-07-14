@@ -6,7 +6,7 @@
 #' @param void_string Stringa da usare se il valore non c'è o non è calcolabile.
 #' @return Un vettore con i risultati descrittivi.
 #' @export
-give_continuous_description <- function (x = NA, max_missed = 0.010, void_string = '-')
+give_continuous_description <- function (x = NA, max_missed = 0.100, void_string = '-')
 {
  X <- na.omit(x)
  if ((length(X) < 3)) { return(void_string) }
@@ -32,11 +32,45 @@ give_continuous_description <- function (x = NA, max_missed = 0.010, void_string
   result <- c(paste(out_n, ' ', '(', out_miss, ')', sep = ''),
               paste(out_mean, ' ', '\u00B1', out_sd, sep = ''),
               paste(out_md, ' ', '(', out_iqr, ')', sep = ''),
-              paste('[', out_min, ' ', ',', ' ', out_max, ']', sep = ''))
+              paste('[', out_min, ', ', out_max, ']', sep = ''))
             names(result) <- c('N (missing %)', 'Mean \u00B1SD', 'Md (IQR)', '[min , Max]')
   return(result)
  }
 }
+
+#' give_continuous_crosstable_2
+#'
+#' Funzione per descrivere una variabile continua e il suo incrocio con un'altra con 2 gruppi (con una tabella relativa a tutti i livelli possibili).
+#'
+#' @param y Un vettore di numerico.
+#' @param group Un vettore di fattori, convertito come tale se numerico, a 2 livelli. 
+#' @param name_y Stringa da usare come nome della variabile (altrimenti è utilizzata l'etichetta, se presente).
+#' @param max_missed Percentuale massima ammessa di omissioni.
+#' @param void_string Stringa da usare se il valore non c'è o non è calcolabile.
+#' @return Un data.frame con i risultati descrittivi (una colonna per livello della variabile con i gruppi).
+#' @export
+give_continuous_crosstable_2 <- function (y = NA, group = NA, name_y = '', max_missed = 0.100, void_string = '-')
+{
+ DATA <- na.omit(data.frame(Y = y, G = group))
+ if (name_y == '' | is.na(name_y)) { name_y <- Hmisc::label(DATA$Y) }
+ if (!is.factor(DATA$G)) { DATA$G <- ordered(DATA$G) }
+ #
+ result <- c(name_y, give_continuous_description(x = y, max_missed = max_missed, void_string = '-'))
+ for (group_level in levels(DATA$G))
+ {
+  result <- c(result, paste(give_continuous_description(x = DATA$Y[DATA$G == group_level], max_missed = max_missed, void_string = '-')[c(2)], ' (n=', length(DATA$Y[DATA$G == group_level]), ')', sep = ''))
+ }
+ result <- c(result, give_continuous_test_2(y = DATA$Y, group = DATA$G, void_string = void_string)[1])
+ #
+ if ((1 - (length(DATA$Y) / length(y))) <= max_missed)
+ {
+  result <- data.frame(t(result))
+  names(result) <- c('Variable', 'N (missing %)', 'Mean \u00B1SD', 'Md (IQR)', '[min , Max]', levels(DATA$G))
+  return(result)
+ }
+}
+
+#
 
 #' give_categorical_description
 #'
@@ -49,7 +83,7 @@ give_continuous_description <- function (x = NA, max_missed = 0.010, void_string
 #' @param list_marker Marcatore di punto elenco (per la lista dei livelli).
 #' @return Un data.frame con i risultati descrittivi.
 #' @export
-give_categorical_description <- function (x = NA, name = '', max_missed = 0.010, void_string = '-', list_marker = '-')
+give_categorical_description <- function (x = NA, name = '', max_missed = 0.100, void_string = '-', list_marker = '-')
 {
  X <- x[!is.na(x)]
  if (name == '' | is.na(name)) { name <- Hmisc::label(X) }
@@ -92,7 +126,7 @@ give_categorical_description <- function (x = NA, name = '', max_missed = 0.010,
 #' @param list_marker Marcatore di punto elenco (per la lista dei livelli).
 #' @return Un data.frame con i risultati descrittivi (una colonna per livello della variabile con i gruppi).
 #' @export
-give_categorical_crosstable <- function (x = NA, y = NA, name_x = '', max_missed = 0.030, void_string = '-', list_marker = '-')
+give_categorical_crosstable <- function (x = NA, y = NA, name_x = '', max_missed = 0.100, void_string = '-', list_marker = '-')
 {
  XY <- na.omit(data.frame(X = x, Y = y))
  if (name_x == '' | is.na(name_x)) { name_x <- Hmisc::label(XY$X) }

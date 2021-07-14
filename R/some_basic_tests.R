@@ -100,4 +100,31 @@ give_categorical_test <- function (x = NA, y = NA, void_string = '-')
  return(result)
 }
 
+#' give_continuous_test_2
+#'
+#' Test per categorie (Chi quadro o test di Fisher).
+#'
+#' @param y Vettore numerico.
+#' @param group Vettore di fattori, a 2 livelli.
+#' @param void_string Stringa da usare se il valore non c'è o non è calcolabile.
+#' @return Un vettore con il risultato del test e con il valore di p risultante.
+#' @export
+give_continuous_test_2 <- function (y = NA, group = NA, void_string = '-')
+{
+ if (!is.factor(group)) { G <- ordered(group) }  
+ DATA <- na.omit(data.frame(Y = y, G = group))
+ if (min(table(DATA$G)) >= 3)
+ {
+  LEV <- car::leveneTest(Y ~ G, data = DATA, center = median)
+  PAR <- t.test(Y ~ G, data = DATA)
+         PAR <- c(give_nice_p(value = PAR$p.value, decimals = 3, with_p = TRUE, with_equal_sign = FALSE, with_stars = TRUE, multiple_stars = TRUE, alpha = 0.050, multiple_alphas = c(0.050, 0.010, 0.001), give_only_stars = FALSE, void_string = '-'),
+                  PAR$p.value)
+  NPAR <- wilcox.test(Y ~ G, data = DATA)
+          NPAR <- c(give_nice_p(value = NPAR$p.value, decimals = 3, with_p = TRUE, with_equal_sign = FALSE, with_stars = TRUE, multiple_stars = TRUE, alpha = 0.050, multiple_alphas = c(0.050, 0.010, 0.001), give_only_stars = FALSE, void_string = '-'),
+                    NPAR$p.value)
+  if (LEV$'Pr(>F)'[1] < 0.050) { result <- NPAR } else { result <- PAR }
+  return(result)
+ } else { return(c('-', NA)) }
+}
+
 #

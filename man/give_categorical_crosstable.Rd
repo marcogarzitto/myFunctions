@@ -8,7 +8,7 @@ give_categorical_crosstable(
   x = NA,
   y = NA,
   name_x = "",
-  max_missed = 0.03,
+  max_missed = 0.1,
   void_string = "-",
   list_marker = "-"
 )

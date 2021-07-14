@@ -7,7 +7,7 @@
 give_categorical_description(
   x = NA,
   name = "",
-  max_missed = 0.01,
+  max_missed = 0.1,
   void_string = "-",
   list_marker = "-"
 )

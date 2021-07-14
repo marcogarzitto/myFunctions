@@ -4,7 +4,7 @@
 \alias{give_continuous_description}
 \title{give_continuous_description}
 \usage{
-give_continuous_description(x = NA, max_missed = 0.01, void_string = "-")
+give_continuous_description(x = NA, max_missed = 0.1, void_string = "-")
 }
 \arguments{
 \item{x}{Un vettore numerico (rappresentante una variabile continua).}
