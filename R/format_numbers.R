@@ -39,8 +39,8 @@ give_nice <- function (value = NA, decimals = 3, text = '', with_equal_sign = FA
    return(paste(text, equal_sign, void_string, sep = ''))
   } else
   {
-     if (value > max_value) { value <- max_value - 10**(-1 * (1 + decimals)) }
-     if (value < min_value) { value <- min_value + 10**(-1 * (1 + decimals)) }
+     if (value > max_value) { value <- max_value - 10**(-1 * (3 + decimals)) }
+     if (value < min_value) { value <- min_value + 10**(-1 * (3 + decimals)) }
   }
  }
  if (with_sign)
