@@ -126,7 +126,8 @@ give_ttest <- function (y = NA, group = NA, void_string = '-')
                   give_nice(value = TEST$statistic, decimals = 2, text = '', with_equal_sign = TRUE, with_sign = FALSE, min_value = 0, max_value = 1000, void_string = void_string),
                   note,
                   ', ',
-                  give_nice_p(value = TEST$p.value, decimals = 3, with_p = TRUE, with_equal_sign = FALSE, with_stars = TRUE, multiple_stars = TRUE, alpha = 0.050, multiple_alphas = c(0.050, 0.010, 0.001), give_only_stars = FALSE, void_string = void_string))
+                  give_nice_p(value = TEST$p.value, decimals = 3, with_p = TRUE, with_equal_sign = FALSE, with_stars = TRUE, multiple_stars = TRUE, alpha = 0.050, multiple_alphas = c(0.050, 0.010, 0.001), give_only_stars = FALSE, void_string = void_string),
+                  sep = '')
   result <- c(result, TEST$p.value)
   return(result)
  } else { return(c(void_string, NA)) }
@@ -150,8 +151,9 @@ give_mannwhitney <- function (y = NA, group = NA, void_string = '-')
   TEST <- wilcox.test(Y ~ G, data = DATA, exact = TRUE, correct = TRUE)
   result <- paste(give_nice(value = TEST$statistic, decimals = 1, text = 'U', with_equal_sign = TRUE, with_sign = FALSE, min_value = 0, max_value = 1000, void_string = void_string),
                   ', ',
-                  give_nice_p(value = TEST$p.value, decimals = 3, with_p = TRUE, with_equal_sign = FALSE, with_stars = TRUE, multiple_stars = TRUE, alpha = 0.050, multiple_alphas = c(0.050, 0.010, 0.001), give_only_stars = FALSE, void_string = void_string))
-  result <- c(result, NPAR$p.value)
+                  give_nice_p(value = TEST$p.value, decimals = 3, with_p = TRUE, with_equal_sign = FALSE, with_stars = TRUE, multiple_stars = TRUE, alpha = 0.050, multiple_alphas = c(0.050, 0.010, 0.001), give_only_stars = FALSE, void_string = void_string),
+                  sep = '')
+  result <- c(result, TEST$p.value)
   return(result)
  } else { return(c(void_string, NA)) }
 }
