@@ -174,8 +174,8 @@ give_continuous_test_2group_b <- function (y = NA, group = NA, void_string = '-'
  if ((min(table(DATA$G)) >= 3) & (sd(DATA$Y) > 0))
  {
   LEV <- car::leveneTest(Y ~ G, data = DATA, center = median)
-  PAR <- give_ttest(y = DATA$Y, group = DATA$group, void_string = void_string)
-  NPAR <- give_mannwhitney(y = DATA$Y, group = DATA$group, void_string = void_string)
+  PAR <- give_ttest(y = DATA$Y, group = DATA$G, void_string = void_string)
+  NPAR <- give_mannwhitney(y = DATA$Y, group = DATA$G, void_string = void_string)
   if (LEV$'Pr(>F)'[1] < 0.050) { result <- NPAR } else { result <- PAR }
   return(result)
  } else { return(c(void_string, NA)) }
