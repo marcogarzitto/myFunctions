@@ -28,11 +28,11 @@ give_chisquare <- function (x = NA, y = NA, void_string = '-')
                TEST$parameter,
                ')',
                '=',
-               give_nice(value = TEST$statistic, decimals = 2, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = '-'),
+               give_nice(value = TEST$statistic, decimals = 2, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string),
                note,
                ',',
                ' ',
-               give_nice_p(value = TEST$p.value, decimals = 3, with_p = TRUE, with_equal_sign = FALSE, with_stars = TRUE, multiple_stars = TRUE, alpha = 0.050, multiple_alphas = c(0.050, 0.010, 0.001), give_only_stars = FALSE, void_string = '-'),
+               give_nice_p(value = TEST$p.value, decimals = 3, with_p = TRUE, with_equal_sign = FALSE, with_stars = TRUE, multiple_stars = TRUE, alpha = 0.050, multiple_alphas = c(0.050, 0.010, 0.001), give_only_stars = FALSE, void_string = void_string),
                sep = '')
   p_value <- TEST$p.value
  }
@@ -63,16 +63,16 @@ give_fisher <- function (x = NA, y = NA, void_string = '-')
   TEST <- fisher.test(XY$X, XY$Y)
   out <- paste('OR',
                '=',
-               give_nice(value = abs(TEST$estimate), decimals = 3, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = '-'),
+               give_nice(value = abs(TEST$estimate), decimals = 3, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string),
                ' ',
                '(',
-               give_nice(value = abs(TEST$conf.int[1]), decimals = 2, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = '-'),
+               give_nice(value = abs(TEST$conf.int[1]), decimals = 2, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string),
                ', ',
-               give_nice(value = abs(TEST$conf.int[2]), decimals = 2, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = '-'),
+               give_nice(value = abs(TEST$conf.int[2]), decimals = 2, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string),
                ')',
                ',',
                ' ',
-               give_nice_p(value = TEST$p.value, decimals = 3, with_p = TRUE, with_equal_sign = FALSE, with_stars = TRUE, multiple_stars = TRUE, alpha = 0.050, multiple_alphas = c(0.050, 0.010, 0.001), give_only_stars = FALSE, void_string = '-'),
+               give_nice_p(value = TEST$p.value, decimals = 3, with_p = TRUE, with_equal_sign = FALSE, with_stars = TRUE, multiple_stars = TRUE, alpha = 0.050, multiple_alphas = c(0.050, 0.010, 0.001), give_only_stars = FALSE, void_string = void_string),
                sep = '')
   p_value <- TEST$p.value
  }
