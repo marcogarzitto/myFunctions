@@ -81,7 +81,7 @@ give_fisher <- function (x = NA, y = NA, void_string = '-')
 
 #' give_categorical_test
 #'
-#' Test per categorie (Chi quadro o test di Fisher).
+#' Test di frequenza per 2 categorie incrociate (Chi quadro o test di Fisher).
 #'
 #' @param x Vettore di fattori.
 #' @param y Vettore di fattori.
@@ -111,7 +111,7 @@ give_categorical_test <- function (x = NA, y = NA, void_string = '-')
 #' @export
 give_ttest <- function (y = NA, group = NA, void_string = '-')
 {
- if (!is.factor(group)) { G <- ordered(group) }  
+ if (!is.factor(group)) { group <- ordered(group) }  
  DATA <- na.omit(data.frame(Y = y, G = group))
  if ((min(table(DATA$G)) >= 3) & (sd(DATA$Y) > 0))
  {
@@ -143,7 +143,7 @@ give_ttest <- function (y = NA, group = NA, void_string = '-')
 #' @export
 give_mannwhitney <- function (y = NA, group = NA, void_string = '-')
 {
- if (!is.factor(group)) { G <- ordered(group) }  
+ if (!is.factor(group)) { group <- ordered(group) }  
  DATA <- na.omit(data.frame(Y = y, G = group))
  if ((min(table(DATA$G)) >= 3) & (sd(DATA$Y) > 0))
  {
@@ -156,18 +156,18 @@ give_mannwhitney <- function (y = NA, group = NA, void_string = '-')
  } else { return(c(void_string, NA)) }
 }
 
-#' give_continuous_test_2
+#' give_continuous_test_2group_b
 #'
-#' Test per categorie (Chi quadro o test di Fisher).
+#' Test per variabile numerica rispetto ad un gruppo (test t o test di Mann-Whitney).
 #'
 #' @param y Vettore numerico.
 #' @param group Vettore di fattori, a 2 livelli.
 #' @param void_string Stringa da usare se il valore non c'è o non è calcolabile.
 #' @return Un vettore con il risultato del test e con il valore di p risultante.
 #' @export
-give_continuous_test_2 <- function (y = NA, group = NA, void_string = '-')
+give_continuous_test_2group_b <- function (y = NA, group = NA, void_string = '-')
 {
- if (!is.factor(group)) { G <- ordered(group) }  
+ if (!is.factor(group)) { group <- ordered(group) }  
  DATA <- na.omit(data.frame(Y = y, G = group))
  if ((min(table(DATA$G)) >= 3) & (sd(DATA$Y) > 0))
  {

@@ -38,7 +38,7 @@ give_continuous_description <- function (x = NA, max_missed = 0.100, void_string
  }
 }
 
-#' give_continuous_crosstable_2
+#' give_continuous_crosstable_2group_b
 #'
 #' Funzione per descrivere una variabile continua e il suo incrocio con un'altra con 2 gruppi (con una tabella relativa a tutti i livelli possibili).
 #'
@@ -49,7 +49,7 @@ give_continuous_description <- function (x = NA, max_missed = 0.100, void_string
 #' @param void_string Stringa da usare se il valore non c'è o non è calcolabile.
 #' @return Un data.frame con i risultati descrittivi (una colonna per livello della variabile con i gruppi).
 #' @export
-give_continuous_crosstable_2 <- function (y = NA, group = NA, name_y = '', max_missed = 0.100, void_string = '-')
+give_continuous_crosstable_2group_b <- function (y = NA, group = NA, name_y = '', max_missed = 0.100, void_string = '-')
 {
  DATA <- na.omit(data.frame(Y = y, G = group))
  if (name_y == '' | is.na(name_y)) { name_y <- Hmisc::label(DATA$Y) }
@@ -60,7 +60,7 @@ give_continuous_crosstable_2 <- function (y = NA, group = NA, name_y = '', max_m
  {
   result <- c(result, paste(give_continuous_description(x = DATA$Y[DATA$G == group_level], max_missed = max_missed, void_string = '-')[c(2)], ' (n=', length(DATA$Y[DATA$G == group_level]), ')', sep = ''))
  }
- result <- c(result, give_continuous_test_2(y = DATA$Y, group = DATA$G, void_string = void_string)[1])
+ result <- c(result, give_continuous_test_2group_b(y = DATA$Y, group = DATA$G, void_string = void_string)[1])
  #
  if ((1 - (length(DATA$Y) / length(y))) <= max_missed)
  {

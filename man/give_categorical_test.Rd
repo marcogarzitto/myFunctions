@@ -17,5 +17,5 @@ give_categorical_test(x = NA, y = NA, void_string = "-")
 Un vettore con il risultato del test e con il valore di p risultante.
 }
 \description{
-Test per categorie (Chi quadro o test di Fisher).
+Test di frequenza per 2 categorie incrociate (Chi quadro o test di Fisher).
 }
