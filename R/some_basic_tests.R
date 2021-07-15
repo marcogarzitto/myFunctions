@@ -113,7 +113,7 @@ give_continuous_test_2 <- function (y = NA, group = NA, void_string = '-')
 {
  if (!is.factor(group)) { G <- ordered(group) }  
  DATA <- na.omit(data.frame(Y = y, G = group))
- if (min(table(DATA$G)) >= 3)
+ if ((min(table(DATA$G)) >= 3) & (sd(DATA$Y) > 0))
  {
   LEV <- car::leveneTest(Y ~ G, data = DATA, center = median)
   PAR <- t.test(Y ~ G, data = DATA)
