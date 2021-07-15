@@ -121,7 +121,7 @@ give_ttest <- function (y = NA, group = NA, void_string = '-')
   TEST <- t.test(Y ~ G, data = DATA)
   result <- paste('T',
                   '(',
-                  give_nice(value = TEST$parameter, decimals = 1, text = '', with_equal_sign = TRUE, with_sign = FALSE, min_value = 0, max_value = NA, void_string = void_string),
+                  give_nice(value = TEST$parameter, decimals = 1, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0, max_value = Inf, void_string = void_string),
                   ')',
                   give_nice(value = TEST$statistic, decimals = 2, text = '', with_equal_sign = TRUE, with_sign = FALSE, min_value = 0, max_value = 1000, void_string = void_string),
                   note,
