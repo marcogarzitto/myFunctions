@@ -13,4 +13,4 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-Depends: extrafont, magrittr, Hmisc, officer, car, psych, tidyverse, sciplot, lme4, nlme, lmerTes
+Depends: extrafont, magrittr, Hmisc, officer, car, psych, tidyverse, sciplot, lme4, nlme, lmerTest
