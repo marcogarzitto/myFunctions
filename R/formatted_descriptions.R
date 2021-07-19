@@ -65,7 +65,7 @@ give_continuous_crosstable_2group_b <- function (y = NA, group = NA, name_y = ''
  if ((1 - (length(DATA$Y) / length(y))) <= max_missed)
  {
   result <- data.frame(t(result))
-  names(result) <- c('Variable', 'N (missing %)', 'Mean \u00B1SD', 'Md (IQR)', '[min, Max]', levels(DATA$G))
+  names(result) <- c('Variable', 'N (missing %)', 'Mean \u00B1SD', 'Md (IQR)', '[min, Max]', levels(DATA$G), 'Test')
   return(result)
  }
 }
