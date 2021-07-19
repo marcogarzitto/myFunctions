@@ -17,7 +17,7 @@ give_chisquare <- function (x = NA, y = NA, void_string = '-')
  if (!is.factor(y)) { y <- ordered(y) }
  XY <- na.omit(data.frame(X = x, Y = y))
  EXPECTED <- ((as.matrix(apply(table(XY), 2, sum)) %*% apply(table(XY), 1, sum)) / sum(table(XY)))
- if (min(EXPECTED) < 5) { note <- ' (not-applicable)' }
+ if (!is.na(EXPECTED)) { if (min(EXPECTED) < 5) { note <- ' (not-applicable)' } }
  if ((length(levels(XY$X)) >= 2) & (length(levels(XY$Y)) >= 2)
      &
      (length(levels(ordered(as.character(XY$X)))) >= 2) & (length(levels(ordered(as.character(XY$Y)))) >= 2))
