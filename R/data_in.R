@@ -19,7 +19,7 @@ add_categorical_variable_from_raw_input <- function (name_in = '', acronym = '',
  OUT <- ordered(df_in[, c(name_in)], levels = levels_in)
         levels(OUT) <- levels_out
         if (length(levels_out) > 1) { contrasts(OUT) <- contr.treatment(length(levels_out), base = 1) }
-        Hmisc::label(OUT) <- paste(acronym, if (acronym != '') { ', ' }, variable_description, '[', paste(levels_out, collapse = '/'), ']', sep = '')
+        Hmisc::label(OUT) <- paste(acronym, if (acronym != '') { ', ' }, variable_description, ' ', '[', paste(levels_out, collapse = '/'), ']', sep = '')
  return(OUT)
 }
 
@@ -37,7 +37,7 @@ add_categorical_variable_from_raw_input <- function (name_in = '', acronym = '',
 #' @export
 add_date_variable_from_raw_input <- function (name_in = '', acronym = '', variable_description = '', df_in = IN)
 {
- OUT <- as.Date(IN$birth, '%Y-%m-%d')
+ OUT <- as.Date(df_in[, c(name_in)], '%Y-%m-%d')
  min_date <- as.character(format(min(OUT, na.rm = TRUE), '%d.%m.%Y'))
  max_date <- as.character(format(max(OUT, na.rm = TRUE), '%d.%m.%Y'))
  OUT <- as.character(format(OUT, '%d.%m.%Y'))
