@@ -26,7 +26,7 @@ give_chisquare <- function (x = NA, y = NA, void_string = '-')
      (length(levels(ordered(as.character(XY$X)))) >= 2) & (length(levels(ordered(as.character(XY$Y)))) >= 2))
  {
   TEST <- chisq.test(XY$X, XY$Y)
-  out <- paste('\u03C7',
+  out <- paste('\u03C7', '2',
                '(',
                TEST$parameter,
                ')',
