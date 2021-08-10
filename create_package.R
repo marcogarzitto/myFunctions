@@ -22,7 +22,7 @@
 #
 
 # Depends: extrafont, magrittr, Hmisc, officer, rJava, xlsx, lubridate, car, psych, tidyverse, sciplot, lme4, nlme, lmerTest
-# install.packages(c('languageserver','extrafont', 'magrittr', 'Hmisc', 'officer', 'rJava', 'xlsx', 'lubridate', 'car', 'psych', 'tidyverse', 'sciplot', 'lme4', 'nlme', 'lmerTest'), dep = TRUE)
+# install.packages(c('languageserver','extrafont', 'magrittr', 'Hmisc', 'officer', 'rJava', 'xlsx', 'lubridate', 'car', 'psych', 'tidyverse', 'sciplot', 'lme4', 'nlme', 'lmerTest', 'mclust', 'careless', 'reshape2'), dep = TRUE)
 # update.packages(ask = 'graphics', checkBuilt = TRUE)
 
 #
