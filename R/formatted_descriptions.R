@@ -142,7 +142,7 @@ give_categorical_crosstable <- function (x = NA, y = NA, name_x = '', max_missed
   CROSS <- rbind(CROSS,
                  c(paste(sapply(table(XY)[x_level, ], give_nice, decimals = 0, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string),
                          ' ', '(',
-                         sapply(100 * prop.table(table(XY), 1)[x_level, ], give_nice_percent, decimals = 1, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string),
+                         sapply(100 * prop.table(table(XY), 2)[x_level, ], give_nice_percent, decimals = 1, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string),
                          ')',
                          sep = ''), TEST))
   CROSS <- data.frame(CROSS)
