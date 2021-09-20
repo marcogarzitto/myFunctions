@@ -46,4 +46,23 @@ add_date_variable_from_raw_input <- function (name_in = '', acronym = '', variab
  return(OUT)
 }
 
+#' save_table
+#'
+#' Funzione per ottenere una variabile data (formattata come stringa) a partire da un input di inserimento (xlsx).
+#'
+#' @param what .
+#' @param file_name .
+#' @param where .
+#' @param row_names .
+#' @param fileEncoding .
+#' @return .
+#' @export
+save_table <- function (what, file_name = 'DF', where = getwd(), row_names = FALSE, fileEncoding = 'latin1')
+{
+ save(what, file = paste(where, '/', file_name, '.RData', sep = ''))
+ write.table(what, file = paste(where, '/', file_name, '.csv', sep = ''), sep = ',', dec = '.', row.names = row_names, quote = TRUE, fileEncoding = fileEncoding)
+ write.table(what, file = paste(where, '/', file_name, '_IT', '.csv', sep = ''), sep = ';', dec = ',', row.names = row_names, quote = TRUE, fileEncoding = fileEncoding)
+ xlsx::write.xlsx(what, file = paste(where, '/', file_name, '.xlsx', sep = ''), sheetName = file_name, row.names = row_names, showNA = FALSE)
+}
+
 #
