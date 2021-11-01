@@ -110,9 +110,11 @@ give_categorical_test <- function (x = NA, y = NA, void_string = '-')
 #' @param y Vettore numerico.
 #' @param group Vettore di fattori, a 2 livelli.
 #' @param void_string Stringa da usare se il valore non c'è o non è calcolabile.
+#' @param p_value Valore di alpha per la significatività del test.
+#' @param multiple_alphas Valori di alpha per gli asterischi sulla significatività del test.
 #' @return Un vettore con il risultato del test e con il valore di p risultante.
 #' @export
-give_ttest <- function (y = NA, group = NA, void_string = '-')
+give_ttest <- function (y = NA, group = NA, void_string = '-', p_value = 0.050, multiple_alphas = c(0.050, 0.010, 0.001))
 {
  if (!is.factor(group)) { group <- ordered(group) }  
  DATA <- na.omit(data.frame(Y = y, G = group))
@@ -129,7 +131,7 @@ give_ttest <- function (y = NA, group = NA, void_string = '-')
                   give_nice(value = TEST$statistic, decimals = 2, text = '', with_equal_sign = TRUE, with_sign = FALSE, min_value = 0, max_value = 1000, void_string = void_string),
                   note,
                   ', ',
-                  give_nice_p(value = TEST$p.value, decimals = 3, with_p = TRUE, with_equal_sign = FALSE, with_stars = TRUE, multiple_stars = TRUE, alpha = 0.050, multiple_alphas = c(0.050, 0.010, 0.001), give_only_stars = FALSE, void_string = void_string),
+                  give_nice_p(value = TEST$p.value, decimals = 3, with_p = TRUE, with_equal_sign = FALSE, with_stars = TRUE, multiple_stars = TRUE, alpha = p_value, multiple_alphas = multiple_alphas, give_only_stars = FALSE, void_string = void_string),
                   sep = '')
   result <- c(result, TEST$p.value)
   return(result)
@@ -143,9 +145,11 @@ give_ttest <- function (y = NA, group = NA, void_string = '-')
 #' @param y Vettore numerico.
 #' @param group Vettore di fattori, a 2 livelli.
 #' @param void_string Stringa da usare se il valore non c'è o non è calcolabile.
+#' @param p_value Valore di alpha per la significatività del test.
+#' @param multiple_alphas Valori di alpha per gli asterischi sulla significatività del test.
 #' @return Un vettore con il risultato del test e con il valore di p risultante.
 #' @export
-give_mannwhitney <- function (y = NA, group = NA, void_string = '-')
+give_mannwhitney <- function (y = NA, group = NA, void_string = '-', p_value = 0.050, multiple_alphas = c(0.050, 0.010, 0.001))
 {
  if (!is.factor(group)) { group <- ordered(group) }  
  DATA <- na.omit(data.frame(Y = y, G = group))
@@ -154,7 +158,7 @@ give_mannwhitney <- function (y = NA, group = NA, void_string = '-')
   TEST <- wilcox.test(Y ~ G, data = DATA, exact = TRUE, correct = TRUE)
   result <- paste(give_nice(value = TEST$statistic, decimals = 1, text = 'U', with_equal_sign = TRUE, with_sign = FALSE, min_value = 0, max_value = 1000, void_string = void_string),
                   ', ',
-                  give_nice_p(value = TEST$p.value, decimals = 3, with_p = TRUE, with_equal_sign = FALSE, with_stars = TRUE, multiple_stars = TRUE, alpha = 0.050, multiple_alphas = c(0.050, 0.010, 0.001), give_only_stars = FALSE, void_string = void_string),
+                  give_nice_p(value = TEST$p.value, decimals = 3, with_p = TRUE, with_equal_sign = FALSE, with_stars = TRUE, multiple_stars = TRUE, alpha = p_value, multiple_alphas = multiple_alphas, give_only_stars = FALSE, void_string = void_string),
                   sep = '')
   result <- c(result, TEST$p.value)
   return(result)

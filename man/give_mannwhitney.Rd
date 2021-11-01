@@ -4,7 +4,13 @@
 \alias{give_mannwhitney}
 \title{give_mannwhitney}
 \usage{
-give_mannwhitney(y = NA, group = NA, void_string = "-")
+give_mannwhitney(
+  y = NA,
+  group = NA,
+  void_string = "-",
+  p_value = 0.05,
+  multiple_alphas = c(0.05, 0.01, 0.001)
+)
 }
 \arguments{
 \item{y}{Vettore numerico.}
@@ -12,6 +18,10 @@ give_mannwhitney(y = NA, group = NA, void_string = "-")
 \item{group}{Vettore di fattori, a 2 livelli.}
 
 \item{void_string}{Stringa da usare se il valore non c'è o non è calcolabile.}
+
+\item{p_value}{Valore di alpha per la significatività del test.}
+
+\item{multiple_alphas}{Valori di alpha per gli asterischi sulla significatività del test.}
 }
 \value{
 Un vettore con il risultato del test e con il valore di p risultante.
