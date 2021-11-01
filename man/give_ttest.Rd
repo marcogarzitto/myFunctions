@@ -8,7 +8,7 @@ give_ttest(
   y = NA,
   group = NA,
   void_string = "-",
-  p_value = 0.05,
+  alpha_value = 0.05,
   multiple_alphas = c(0.05, 0.01, 0.001)
 )
 }
@@ -19,7 +19,7 @@ give_ttest(
 
 \item{void_string}{Stringa da usare se il valore non c'è o non è calcolabile.}
 
-\item{p_value}{Valore di alpha per la significatività del test.}
+\item{alpha_value}{Valore di alpha per la significatività del test.}
 
 \item{multiple_alphas}{Valori di alpha per gli asterischi sulla significatività del test.}
 }
