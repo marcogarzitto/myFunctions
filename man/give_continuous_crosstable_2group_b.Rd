@@ -9,7 +9,9 @@ give_continuous_crosstable_2group_b(
   group = NA,
   name_y = "",
   max_missed = 0.1,
-  void_string = "-"
+  void_string = "-",
+  alpha_value = 0.05,
+  multiple_alphas = c(0.05, 0.01, 0.001)
 )
 }
 \arguments{
@@ -22,6 +24,10 @@ give_continuous_crosstable_2group_b(
 \item{max_missed}{Percentuale massima ammessa di omissioni.}
 
 \item{void_string}{Stringa da usare se il valore non c'è o non è calcolabile.}
+
+\item{alpha_value}{Valore di alpha per la significatività del test.}
+
+\item{multiple_alphas}{Valori di alpha per gli asterischi sulla significatività del test.}
 }
 \value{
 Un data.frame con i risultati descrittivi (una colonna per livello della variabile con i gruppi).

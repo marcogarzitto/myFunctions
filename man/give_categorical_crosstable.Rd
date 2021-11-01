@@ -10,7 +10,9 @@ give_categorical_crosstable(
   name_x = "",
   max_missed = 0.1,
   void_string = "-",
-  list_marker = "-"
+  list_marker = "-",
+  alpha_value = 0.05,
+  multiple_alphas = c(0.05, 0.01, 0.001)
 )
 }
 \arguments{
@@ -25,6 +27,10 @@ give_categorical_crosstable(
 \item{void_string}{Stringa da usare se il valore non c'è o non è calcolabile.}
 
 \item{list_marker}{Marcatore di punto elenco (per la lista dei livelli).}
+
+\item{alpha_value}{Valore di alpha per la significatività del test.}
+
+\item{multiple_alphas}{Valori di alpha per gli asterischi sulla significatività del test.}
 }
 \value{
 Un data.frame con i risultati descrittivi (una colonna per livello della variabile con i gruppi).

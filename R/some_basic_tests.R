@@ -93,16 +93,18 @@ give_fisher <- function (x = NA, y = NA, void_string = '-', alpha_value = 0.050,
 #' @param x Vettore di fattori.
 #' @param y Vettore di fattori.
 #' @param void_string Stringa da usare se il valore non c'è o non è calcolabile.
+#' @param alpha_value Valore di alpha per la significatività del test.
+#' @param multiple_alphas Valori di alpha per gli asterischi sulla significatività del test.
 #' @return Un vettore con il risultato del test e con il valore di p risultante.
 #' @export
-give_categorical_test <- function (x = NA, y = NA, void_string = '-')
+give_categorical_test <- function (x = NA, y = NA, void_string = '-', alpha_value = 0.050, multiple_alphas = c(0.050, 0.010, 0.001))
 {
  if (!is.factor(x)) { x <- ordered(x) } 
  if (!is.factor(y)) { y <- ordered(y) } 
  XY <- na.omit(data.frame(X = x, Y = y))
  result <- void_string
- fisher <- give_fisher(x = XY$X, y = XY$Y, void_string = void_string)
- chisquare <- give_chisquare(x = XY$X, y = XY$Y, void_string = void_string)
+ fisher <- give_fisher(x = XY$X, y = XY$Y, void_string = void_string, alpha_value = alpha_value, multiple_alphas = multiple_alphas)
+ chisquare <- give_chisquare(x = XY$X, y = XY$Y, void_string = void_string, alpha_value = alpha_value, multiple_alphas = multiple_alphas)
  if (is.na(fisher[2])) { result <- chisquare } else { result <- fisher }
  return(result)
 }
@@ -176,17 +178,19 @@ give_mannwhitney <- function (y = NA, group = NA, void_string = '-', alpha_value
 #' @param y Vettore numerico.
 #' @param group Vettore di fattori, a 2 livelli.
 #' @param void_string Stringa da usare se il valore non c'è o non è calcolabile.
+#' @param alpha_value Valore di alpha per la significatività del test.
+#' @param multiple_alphas Valori di alpha per gli asterischi sulla significatività del test.
 #' @return Un vettore con il risultato del test e con il valore di p risultante.
 #' @export
-give_continuous_test_2group_b <- function (y = NA, group = NA, void_string = '-')
+give_continuous_test_2group_b <- function (y = NA, group = NA, void_string = '-', alpha_value = 0.050, multiple_alphas = c(0.050, 0.010, 0.001))
 {
  if (!is.factor(group)) { group <- ordered(group) }  
  DATA <- na.omit(data.frame(Y = y, G = group))
  if ((min(table(DATA$G)) >= 3) & (sd(DATA$Y) > 0))
  {
   LEV <- car::leveneTest(Y ~ G, data = DATA, center = median)
-  PAR <- give_ttest(y = DATA$Y, group = DATA$G, void_string = void_string)
-  NPAR <- give_mannwhitney(y = DATA$Y, group = DATA$G, void_string = void_string)
+  PAR <- give_ttest(y = DATA$Y, group = DATA$G, void_string = void_string, alpha_value = alpha_value, multiple_alphas = multiple_alphas)
+  NPAR <- give_mannwhitney(y = DATA$Y, group = DATA$G, void_string = void_string, alpha_value = alpha_value, multiple_alphas = multiple_alphas)
   if (LEV$'Pr(>F)'[1] < 0.050) { result <- NPAR } else { result <- PAR }
   return(result)
  } else { return(c(void_string, NA)) }

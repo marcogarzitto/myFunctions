@@ -4,7 +4,13 @@
 \alias{give_categorical_test}
 \title{give_categorical_test}
 \usage{
-give_categorical_test(x = NA, y = NA, void_string = "-")
+give_categorical_test(
+  x = NA,
+  y = NA,
+  void_string = "-",
+  alpha_value = 0.05,
+  multiple_alphas = c(0.05, 0.01, 0.001)
+)
 }
 \arguments{
 \item{x}{Vettore di fattori.}
@@ -12,6 +18,10 @@ give_categorical_test(x = NA, y = NA, void_string = "-")
 \item{y}{Vettore di fattori.}
 
 \item{void_string}{Stringa da usare se il valore non c'è o non è calcolabile.}
+
+\item{alpha_value}{Valore di alpha per la significatività del test.}
+
+\item{multiple_alphas}{Valori di alpha per gli asterischi sulla significatività del test.}
 }
 \value{
 Un vettore con il risultato del test e con il valore di p risultante.

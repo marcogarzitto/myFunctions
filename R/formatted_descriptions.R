@@ -47,9 +47,11 @@ give_continuous_description <- function (x = NA, max_missed = 0.100, void_string
 #' @param name_y Stringa da usare come nome della variabile (altrimenti è utilizzata l'etichetta, se presente).
 #' @param max_missed Percentuale massima ammessa di omissioni.
 #' @param void_string Stringa da usare se il valore non c'è o non è calcolabile.
+#' @param alpha_value Valore di alpha per la significatività del test.
+#' @param multiple_alphas Valori di alpha per gli asterischi sulla significatività del test.
 #' @return Un data.frame con i risultati descrittivi (una colonna per livello della variabile con i gruppi).
 #' @export
-give_continuous_crosstable_2group_b <- function (y = NA, group = NA, name_y = '', max_missed = 0.100, void_string = '-')
+give_continuous_crosstable_2group_b <- function (y = NA, group = NA, name_y = '', max_missed = 0.100, void_string = '-', alpha_value = 0.050, multiple_alphas = c(0.050, 0.010, 0.001))
 {
  if (name_y == '' | is.na(name_y)) { name_y <- Hmisc::label(DATA$y) }
  if (!is.factor(group)) { group <- ordered(group) }
@@ -60,7 +62,7 @@ give_continuous_crosstable_2group_b <- function (y = NA, group = NA, name_y = ''
  {
   result <- c(result, paste(give_continuous_description(x = DATA$Y[DATA$G == group_level], max_missed = max_missed, void_string = void_string)[c(2)], ' (n=', length(DATA$Y[DATA$G == group_level]), ')', sep = ''))
  }
- result <- c(result, give_continuous_test_2group_b(y = DATA$Y, group = DATA$G, void_string = void_string)[1])
+ result <- c(result, give_continuous_test_2group_b(y = DATA$Y, group = DATA$G, void_string = void_string, alpha_value = alpha_value, multiple_alphas = multiple_alphas)[1])
  #
  if ((1 - (length(DATA$Y) / length(y))) <= max_missed)
  {
@@ -124,9 +126,11 @@ give_categorical_description <- function (x = NA, name = '', max_missed = 0.100,
 #' @param max_missed Percentuale massima ammessa di omissioni.
 #' @param void_string Stringa da usare se il valore non c'è o non è calcolabile.
 #' @param list_marker Marcatore di punto elenco (per la lista dei livelli).
+#' @param alpha_value Valore di alpha per la significatività del test.
+#' @param multiple_alphas Valori di alpha per gli asterischi sulla significatività del test.
 #' @return Un data.frame con i risultati descrittivi (una colonna per livello della variabile con i gruppi).
 #' @export
-give_categorical_crosstable <- function (x = NA, y = NA, name_x = '', max_missed = 0.100, void_string = '-', list_marker = '-')
+give_categorical_crosstable <- function (x = NA, y = NA, name_x = '', max_missed = 0.100, void_string = '-', list_marker = '-', alpha_value = 0.050, multiple_alphas = c(0.050, 0.010, 0.001))
 {
  XY <- na.omit(data.frame(X = x, Y = y))
  if (name_x == '' | is.na(name_x)) { name_x <- Hmisc::label(XY$X) }
@@ -138,7 +142,7 @@ give_categorical_crosstable <- function (x = NA, y = NA, name_x = '', max_missed
  for (x_level in c(1:length(levels(XY$X))))
  {
   #
-  TEST <- give_categorical_test(x = XY$Y, y = (XY$X == levels(XY$X)[x_level]), void_string = void_string)[1]
+  TEST <- give_categorical_test(x = XY$Y, y = (XY$X == levels(XY$X)[x_level]), void_string = void_string, alpha_value = alpha_value, multiple_alphas = multiple_alphas)[1]
   CROSS <- rbind(CROSS,
                  c(paste(sapply(table(XY)[x_level, ], give_nice, decimals = 0, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string),
                          ' ', '(',
