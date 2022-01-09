@@ -177,7 +177,7 @@ give_nice_z <- function (value = NA, decimals = 3, text = '', standard_mean = 0,
 #' @param void_string Stringa da usare se il numero non c'è.
 #' @return Una stringa rappresentante il valore T, con vari abbellimenti.
 #' @export
-give_nice_t <- function (value = NA, decimals = 1, text = 'T', standard_mean = 50, standard_sd = 10, min_value = 0, max_value = 100, with_equal_sign = FALSE, with_sign = FALSE, void_string = '-')
+give_nice_t <- function (value = NA, decimals = 1, text = 't', standard_mean = 50, standard_sd = 10, min_value = 0, max_value = 100, with_equal_sign = FALSE, with_sign = FALSE, void_string = '-')
 {
  if (text != '') { with_equal_sign = TRUE }
  result <- give_nice(text = text, value = value, decimals = decimals, with_equal_sign = with_equal_sign, with_sign = TRUE, min_value = min_value, max_value = max_value, void_string = void_string)

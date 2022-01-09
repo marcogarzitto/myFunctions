@@ -7,7 +7,7 @@
 give_nice_t(
   value = NA,
   decimals = 1,
-  text = "T",
+  text = "t",
   standard_mean = 50,
   standard_sd = 10,
   min_value = 0,

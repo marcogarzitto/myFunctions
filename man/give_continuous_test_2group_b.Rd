@@ -24,7 +24,7 @@ give_continuous_test_2group_b(
 \item{multiple_alphas}{Valori di alpha per gli asterischi sulla significatività del test.}
 }
 \value{
-Un vettore con il risultato del test e con il valore di p risultante.
+Un vettore con il risultato del test, con il valore di p risultante e con la comparazione fra i gruppi.
 }
 \description{
 Test per variabile numerica rispetto ad un gruppo (test t o test di Mann-Whitney).

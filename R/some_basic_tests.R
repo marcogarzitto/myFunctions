@@ -7,7 +7,7 @@
 #' @param void_string Stringa da usare se il valore non c'è o non è calcolabile.
 #' @param alpha_value Valore di alpha per la significatività del test.
 #' @param multiple_alphas Valori di alpha per gli asterischi sulla significatività del test.
-#' @return Un vettore con il risultato del test e con il valore di p risultante.
+#' @return Un vettore con il risultato del test, con il valore di p risultante e con la comparazione fra i gruppi.
 #' @export
 give_chisquare <- function (x = NA, y = NA, void_string = '-', alpha_value = 0.050, multiple_alphas = c(0.050, 0.010, 0.001))
 {
@@ -40,8 +40,16 @@ give_chisquare <- function (x = NA, y = NA, void_string = '-', alpha_value = 0.0
                give_nice_p(value = TEST$p.value, decimals = 3, with_p = TRUE, with_equal_sign = FALSE, with_stars = TRUE, multiple_stars = TRUE, alpha = alpha_value, multiple_alphas = multiple_alphas, give_only_stars = FALSE, void_string = void_string),
                sep = '')
   p_value <- TEST$p.value
+  if (p_value < alpha_value)
+  {
+   if (table(XY$X, XY$Y)[2, 1] > table(XY$X, XY$Y)[2, 2]) { comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], ' > ', levels(XY$Y)[1], sep = '') }
+   if (table(XY$X, XY$Y)[2, 1] < table(XY$X, XY$Y)[2, 2]) { comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], ' < ', levels(XY$Y)[1], sep = '') }
+  } else
+  {
+   comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], ' = ', levels(XY$Y)[1], sep = '')
+  }
  }
- return(c(out, p_value))
+ return(c(out, p_value, comparison))
 }
 
 #' give_fisher
@@ -53,7 +61,7 @@ give_chisquare <- function (x = NA, y = NA, void_string = '-', alpha_value = 0.0
 #' @param void_string Stringa da usare se il valore non c'è o non è calcolabile.
 #' @param alpha_value Valore di alpha per la significatività del test.
 #' @param multiple_alphas Valori di alpha per gli asterischi sulla significatività del test.
-#' @return Un vettore con il risultato del test e con il valore di p risultante.
+#' @return Un vettore con il risultato del test, con il valore di p risultante e con la comparazione fra i gruppi.
 #' @export
 give_fisher <- function (x = NA, y = NA, void_string = '-', alpha_value = 0.050, multiple_alphas = c(0.050, 0.010, 0.001))
 {
@@ -82,8 +90,16 @@ give_fisher <- function (x = NA, y = NA, void_string = '-', alpha_value = 0.050,
                give_nice_p(value = TEST$p.value, decimals = 3, with_p = TRUE, with_equal_sign = FALSE, with_stars = TRUE, multiple_stars = TRUE, alpha = alpha_value, multiple_alphas = multiple_alphas, give_only_stars = FALSE, void_string = void_string),
                sep = '')
   p_value <- TEST$p.value
+  if (p_value < alpha_value)
+  {
+   if (table(XY$X, XY$Y)[2, 1] > table(XY$X, XY$Y)[2, 2]) { comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], ' > ', levels(XY$Y)[1], sep = '') }
+   if (table(XY$X, XY$Y)[2, 1] < table(XY$X, XY$Y)[2, 2]) { comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], ' < ', levels(XY$Y)[1], sep = '') }
+  } else
+  {
+   comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], ' = ', levels(XY$Y)[1], sep = '')
+  }
  }
- return(c(out, p_value))
+ return(c(out, p_value, comparison))
 }
 
 #' give_categorical_test
@@ -95,7 +111,7 @@ give_fisher <- function (x = NA, y = NA, void_string = '-', alpha_value = 0.050,
 #' @param void_string Stringa da usare se il valore non c'è o non è calcolabile.
 #' @param alpha_value Valore di alpha per la significatività del test.
 #' @param multiple_alphas Valori di alpha per gli asterischi sulla significatività del test.
-#' @return Un vettore con il risultato del test e con il valore di p risultante.
+#' @return Un vettore con il risultato del test, con il valore di p risultante e con la comparazione fra i gruppi.
 #' @export
 give_categorical_test <- function (x = NA, y = NA, void_string = '-', alpha_value = 0.050, multiple_alphas = c(0.050, 0.010, 0.001))
 {
@@ -118,7 +134,7 @@ give_categorical_test <- function (x = NA, y = NA, void_string = '-', alpha_valu
 #' @param void_string Stringa da usare se il valore non c'è o non è calcolabile.
 #' @param alpha_value Valore di alpha per la significatività del test.
 #' @param multiple_alphas Valori di alpha per gli asterischi sulla significatività del test.
-#' @return Un vettore con il risultato del test e con il valore di p risultante.
+#' @return Un vettore con il risultato del test, con il valore di p risultante e con la comparazione fra i gruppi.
 #' @export
 give_ttest <- function (y = NA, group = NA, void_string = '-', alpha_value = 0.050, multiple_alphas = c(0.050, 0.010, 0.001))
 {
@@ -130,7 +146,7 @@ give_ttest <- function (y = NA, group = NA, void_string = '-', alpha_value = 0.0
   note <- ''
   if (LEVENE$'Pr(>F)'[1] < 0.050) { note <- ' (not-applicable)' }
   TEST <- t.test(Y ~ G, data = DATA)
-  result <- paste('T',
+  result <- paste('t',
                   '(',
                   give_nice(value = TEST$parameter, decimals = 1, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0, max_value = Inf, void_string = void_string),
                   ')',
@@ -139,9 +155,17 @@ give_ttest <- function (y = NA, group = NA, void_string = '-', alpha_value = 0.0
                   ', ',
                   give_nice_p(value = TEST$p.value, decimals = 3, with_p = TRUE, with_equal_sign = FALSE, with_stars = TRUE, multiple_stars = TRUE, alpha = alpha_value, multiple_alphas = multiple_alphas, give_only_stars = FALSE, void_string = void_string),
                   sep = '')
-  result <- c(result, TEST$p.value)
+  if (TEST$p.value < alpha_value)
+  {
+   if (mean(DATA$Y[DATA$G == levels(group)[1]], na.rm = TRUE) > mean(DATA$Y[DATA$G == levels(group)[2]], na.rm = TRUE)) { comparison <- paste(levels(group)[1], ' > ', levels(group)[2], sep = '') }
+   if (mean(DATA$Y[DATA$G == levels(group)[1]], na.rm = TRUE) < mean(DATA$Y[DATA$G == levels(group)[2]], na.rm = TRUE)) { comparison <- paste(levels(group)[1], ' < ', levels(group)[2], sep = '') }
+  } else
+  {
+   comparison <- paste(levels(group)[1], ' = ', levels(group)[2], sep = '')
+  }
+  result <- c(result, TEST$p.value, comparison)
   return(result)
- } else { return(c(void_string, NA)) }
+ } else { return(c(void_string, NA, NA)) }
 }
 
 #' give_mannwhitney
@@ -153,7 +177,7 @@ give_ttest <- function (y = NA, group = NA, void_string = '-', alpha_value = 0.0
 #' @param void_string Stringa da usare se il valore non c'è o non è calcolabile.
 #' @param alpha_value Valore di alpha per la significatività del test.
 #' @param multiple_alphas Valori di alpha per gli asterischi sulla significatività del test.
-#' @return Un vettore con il risultato del test e con il valore di p risultante.
+#' @return Un vettore con il risultato del test, con il valore di p risultante e con la comparazione fra i gruppi.
 #' @export
 give_mannwhitney <- function (y = NA, group = NA, void_string = '-', alpha_value = 0.050, multiple_alphas = c(0.050, 0.010, 0.001))
 {
@@ -166,9 +190,17 @@ give_mannwhitney <- function (y = NA, group = NA, void_string = '-', alpha_value
                   ', ',
                   give_nice_p(value = TEST$p.value, decimals = 3, with_p = TRUE, with_equal_sign = FALSE, with_stars = TRUE, multiple_stars = TRUE, alpha = alpha_value, multiple_alphas = multiple_alphas, give_only_stars = FALSE, void_string = void_string),
                   sep = '')
-  result <- c(result, TEST$p.value)
+  if (TEST$p.value < alpha_value)
+  {
+   if (mean(DATA$Y[DATA$G == levels(group)[1]], na.rm = TRUE) > mean(DATA$Y[DATA$G == levels(group)[2]], na.rm = TRUE)) { comparison <- paste(levels(group)[1], ' > ', levels(group)[2], sep = '') }
+   if (mean(DATA$Y[DATA$G == levels(group)[1]], na.rm = TRUE) < mean(DATA$Y[DATA$G == levels(group)[2]], na.rm = TRUE)) { comparison <- paste(levels(group)[1], ' < ', levels(group)[2], sep = '') }
+  } else
+  {
+   comparison <- paste(levels(group)[1], ' = ', levels(group)[2], sep = '')
+  }
+  result <- c(result, TEST$p.value, comparison)
   return(result)
- } else { return(c(void_string, NA)) }
+ } else { return(c(void_string, NA, NA)) }
 }
 
 #' give_continuous_test_2group_b
@@ -180,7 +212,7 @@ give_mannwhitney <- function (y = NA, group = NA, void_string = '-', alpha_value
 #' @param void_string Stringa da usare se il valore non c'è o non è calcolabile.
 #' @param alpha_value Valore di alpha per la significatività del test.
 #' @param multiple_alphas Valori di alpha per gli asterischi sulla significatività del test.
-#' @return Un vettore con il risultato del test e con il valore di p risultante.
+#' @return Un vettore con il risultato del test, con il valore di p risultante e con la comparazione fra i gruppi.
 #' @export
 give_continuous_test_2group_b <- function (y = NA, group = NA, void_string = '-', alpha_value = 0.050, multiple_alphas = c(0.050, 0.010, 0.001))
 {
@@ -193,7 +225,7 @@ give_continuous_test_2group_b <- function (y = NA, group = NA, void_string = '-'
   NPAR <- give_mannwhitney(y = DATA$Y, group = DATA$G, void_string = void_string, alpha_value = alpha_value, multiple_alphas = multiple_alphas)
   if (LEV$'Pr(>F)'[1] < 0.050) { result <- NPAR } else { result <- PAR }
   return(result)
- } else { return(c(void_string, NA)) }
+ } else { return(c(void_string, NA, NA)) }
 }
 
 #
