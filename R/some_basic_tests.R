@@ -90,8 +90,9 @@ give_fisher <- function (x = NA, y = NA, void_string = '-', alpha_value = 0.050,
                give_nice_p(value = TEST$p.value, decimals = 3, with_p = TRUE, with_equal_sign = FALSE, with_stars = TRUE, multiple_stars = TRUE, alpha = alpha_value, multiple_alphas = multiple_alphas, give_only_stars = FALSE, void_string = void_string),
                sep = '')
   p_value <- TEST$p.value
-  if (p_value < alpha_value)
+  if (dim(table(XY$X, XY$Y))[1] == 2 & dim(table(XY$X, XY$Y))[2] == 2 & p_value < alpha_value)
   {
+   comparison <- '-'
    if (table(XY$X, XY$Y)[2, 1] > table(XY$X, XY$Y)[2, 2]) { comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], ' > ', levels(XY$Y)[2], sep = '') }
    if (table(XY$X, XY$Y)[2, 1] < table(XY$X, XY$Y)[2, 2]) { comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], ' < ', levels(XY$Y)[2], sep = '') }
   } else
