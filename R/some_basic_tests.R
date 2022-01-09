@@ -43,11 +43,11 @@ give_chisquare <- function (x = NA, y = NA, void_string = '-', alpha_value = 0.0
   p_value <- TEST$p.value
   if (p_value < alpha_value)
   {
-   if (table(XY$X, XY$Y)[2, 1] > table(XY$X, XY$Y)[2, 2]) { comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], ' > ', levels(XY$Y)[2], sep = '') }
-   if (table(XY$X, XY$Y)[2, 1] < table(XY$X, XY$Y)[2, 2]) { comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], ' < ', levels(XY$Y)[2], sep = '') }
+   if (table(XY$X, XY$Y)[2, 1] > table(XY$X, XY$Y)[2, 2]) { comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], '>', levels(XY$Y)[2], sep = '') }
+   if (table(XY$X, XY$Y)[2, 1] < table(XY$X, XY$Y)[2, 2]) { comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], '<', levels(XY$Y)[2], sep = '') }
   } else
   {
-   comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], ' = ', levels(XY$Y)[2], sep = '')
+   comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], '=', levels(XY$Y)[2], sep = '')
   }
  }
  return(c(out, p_value, comparison))
@@ -94,11 +94,11 @@ give_fisher <- function (x = NA, y = NA, void_string = '-', alpha_value = 0.050,
   p_value <- TEST$p.value
   if (p_value < alpha_value)
   {
-   if (table(XY$X, XY$Y)[2, 1] > table(XY$X, XY$Y)[2, 2]) { comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], ' > ', levels(XY$Y)[2], sep = '') }
-   if (table(XY$X, XY$Y)[2, 1] < table(XY$X, XY$Y)[2, 2]) { comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], ' < ', levels(XY$Y)[2], sep = '') }
+   if (table(XY$X, XY$Y)[2, 1] > table(XY$X, XY$Y)[2, 2]) { comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], '>', levels(XY$Y)[2], sep = '') }
+   if (table(XY$X, XY$Y)[2, 1] < table(XY$X, XY$Y)[2, 2]) { comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], '<', levels(XY$Y)[2], sep = '') }
   } else
   {
-   comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], ' = ', levels(XY$Y)[2], sep = '')
+   comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], '=', levels(XY$Y)[2], sep = '')
   }
  }
  return(c(out, p_value, comparison))
