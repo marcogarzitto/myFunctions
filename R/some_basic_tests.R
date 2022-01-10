@@ -159,11 +159,11 @@ give_ttest <- function (y = NA, group = NA, void_string = '-', alpha_value = 0.0
                   sep = '')
   if (TEST$p.value < alpha_value)
   {
-   if (mean(DATA$Y[DATA$G == levels(group)[1]], na.rm = TRUE) > mean(DATA$Y[DATA$G == levels(group)[2]], na.rm = TRUE)) { comparison <- paste(levels(group)[1], ' > ', levels(group)[2], sep = '') }
-   if (mean(DATA$Y[DATA$G == levels(group)[1]], na.rm = TRUE) < mean(DATA$Y[DATA$G == levels(group)[2]], na.rm = TRUE)) { comparison <- paste(levels(group)[1], ' < ', levels(group)[2], sep = '') }
+   if (mean(DATA$Y[DATA$G == levels(group)[1]], na.rm = TRUE) > mean(DATA$Y[DATA$G == levels(group)[2]], na.rm = TRUE)) { comparison <- paste(levels(group)[1], '>', levels(group)[2], sep = '') }
+   if (mean(DATA$Y[DATA$G == levels(group)[1]], na.rm = TRUE) < mean(DATA$Y[DATA$G == levels(group)[2]], na.rm = TRUE)) { comparison <- paste(levels(group)[1], '<', levels(group)[2], sep = '') }
   } else
   {
-   comparison <- paste(levels(group)[1], ' = ', levels(group)[2], sep = '')
+   comparison <- paste(levels(group)[1], '=', levels(group)[2], sep = '')
   }
   result <- c(result, TEST$p.value, comparison)
   return(result)
@@ -194,11 +194,11 @@ give_mannwhitney <- function (y = NA, group = NA, void_string = '-', alpha_value
                   sep = '')
   if (TEST$p.value < alpha_value)
   {
-   if (mean(DATA$Y[DATA$G == levels(group)[1]], na.rm = TRUE) > mean(DATA$Y[DATA$G == levels(group)[2]], na.rm = TRUE)) { comparison <- paste(levels(group)[1], ' > ', levels(group)[2], sep = '') }
-   if (mean(DATA$Y[DATA$G == levels(group)[1]], na.rm = TRUE) < mean(DATA$Y[DATA$G == levels(group)[2]], na.rm = TRUE)) { comparison <- paste(levels(group)[1], ' < ', levels(group)[2], sep = '') }
+   if (mean(DATA$Y[DATA$G == levels(group)[1]], na.rm = TRUE) > mean(DATA$Y[DATA$G == levels(group)[2]], na.rm = TRUE)) { comparison <- paste(levels(group)[1], '>', levels(group)[2], sep = '') }
+   if (mean(DATA$Y[DATA$G == levels(group)[1]], na.rm = TRUE) < mean(DATA$Y[DATA$G == levels(group)[2]], na.rm = TRUE)) { comparison <- paste(levels(group)[1], '<', levels(group)[2], sep = '') }
   } else
   {
-   comparison <- paste(levels(group)[1], ' = ', levels(group)[2], sep = '')
+   comparison <- paste(levels(group)[1], '=', levels(group)[2], sep = '')
   }
   result <- c(result, TEST$p.value, comparison)
   return(result)
