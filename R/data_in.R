@@ -42,7 +42,7 @@ add_date_variable_from_raw_input <- function (name_in = '', acronym = '', variab
  min_date <- as.character(format(min(OUT, na.rm = TRUE), '%d.%m.%Y'))
  max_date <- as.character(format(max(OUT, na.rm = TRUE), '%d.%m.%Y'))
  OUT <- as.character(format(OUT, '%d.%m.%Y'))
-        Hmisc::label(OUT) <- paste(acronym, if (acronym != '') { ', ' }, variable_description, '[', min_date, ' , ', max_date, ']', sep = '')
+        Hmisc::label(OUT) <- paste(acronym, if (acronym != '') { ', ' }, variable_description, ' ', '[', min_date, ', ', max_date, ']', sep = '')
  return(OUT)
 }
 
