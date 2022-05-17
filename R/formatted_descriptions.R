@@ -9,7 +9,12 @@
 give_continuous_description <- function (x = NA, max_missed = 0.100, void_string = '-')
 {
  X <- na.omit(x)
- if ((length(X) < 3)) { return(void_string) }
+ if ((length(X) > 0))
+ {
+  result <- c(void_string, void_string, void_string, void_string)
+            names(result) <- c('N (missing %)', 'Mean \u00B1SD', 'Md (IQR)', '[min , Max]')
+  return(void_string)
+ }
  if ((1 - (length(X) / length(x))) <= max_missed)
  {
   out_n <- length(X)
