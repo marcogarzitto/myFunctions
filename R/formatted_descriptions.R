@@ -29,7 +29,7 @@ give_continuous_description <- function (x = NA, max_missed = 0.100, void_string
   out_max <- max(X, na.rm = TRUE)
              out_max <- give_nice(value = out_max, decimals = 2, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string)
   #
-  result <- c(paste(out_n, ' ', '(', out_miss, ')', sep = ''),
+  result <- c(paste(out_n, ' ', '(', 'missing: ', out_miss, ')', sep = ''),
               paste(out_mean, ' ', '\u00B1', out_sd, sep = ''),
               paste(out_md, ' ', '(', out_iqr, ')', sep = ''),
               paste('[', out_min, ', ', out_max, ']', sep = ''))
@@ -96,7 +96,7 @@ give_categorical_description <- function (x = NA, name = '', max_missed = 0.100,
            out_n <- give_nice(value = out_n, decimals = 0, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string)
   out_miss <- 100 * (1 - (length(X) / length(x)))
               out_miss <- give_nice_percent(value = out_miss, decimals = 1, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = -Inf, max_value = Inf, void_string = void_string)
-  out_primary <- paste(out_n, ' ', '(', 'Missing: ', out_miss, ')', sep = '')
+  out_primary <- paste(out_n, ' ', '(', 'missing: ', out_miss, ')', sep = '')
   result <- c(name, out_primary)
   #
   for (x_level in levels(X))
