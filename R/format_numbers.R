@@ -37,14 +37,14 @@ give_nice <- function (value = NA, decimals = 3, text = '', with_equal_sign = FA
  {
   if (value >= 0) { plus_sign <- '+' } else { plus_sign <- '' }
  } else { plus_sign <- '' }
- if (!is.infinite(max_value) & !is.na(max_value))
+ if (!is.infinite(max_value) & !is.na(max_value) & (value > max_value))
  {
-  if (value > max_value) { value <- max_value }
+  value <- max_value
   equal_sign <- '>'
  }
- if (!is.infinite(min_value) & !is.na(min_value))
+ if (!is.infinite(min_value) & !is.na(min_value) & (value < min_value))
  {
-  if (value < min_value) { value <- min_value }
+  value <- min_value
   equal_sign <- '<'
  }
  result <- arrotonda(value, decimals = decimals)
