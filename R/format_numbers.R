@@ -32,52 +32,22 @@ give_nice <- function (value = NA, decimals = 3, text = '', with_equal_sign = FA
  if (text != '') { with_equal_sign = TRUE }
  if (with_equal_sign) { equal_sign <- '=' } else { equal_sign <- '' }
  if (is.na(value) | !is.numeric(value)) { return(paste(text, equal_sign, void_string, sep = '')) }
- if (is.infinite(value))
- {
-  if (is.infinite(max_value) & is.infinite(min_value))
-  {
-   return(paste(text, equal_sign, void_string, sep = ''))
-  } else
-  {
-     if (value > max_value) { value <- max_value - 10**(-1 * (3 + decimals)) }
-     if (value < min_value) { value <- min_value + 10**(-1 * (3 + decimals)) }
-  }
- }
+ if (is.infinite(value)) { return(paste(text, equal_sign, void_string, sep = '')) }
  if (with_sign)
  {
   if (value >= 0) { plus_sign <- '+' } else { plus_sign <- '' }
  } else { plus_sign <- '' }
- if (is.na(min_value) & is.na(max_value))
+ if (!is.infinite(max_value) & !is.na(max_value))
  {
-  result <- arrotonda(value, decimals = decimals)
- } else if (!is.na(min_value))
- {
-  if (value <= min_value)
-  {
-   result <- arrotonda(min_value, decimals = decimals)
-  } else if (round(value, decimals) <= round(min_value, decimals))
-  {
-   result <- arrotonda(min_value + 10**(-1 * decimals), decimals = decimals)
-   equal_sign <- '<'
-  } else if (!is.na(max_value))
-  {
-   if (value >= max_value)
-   {
-    result <- arrotonda(max_value, decimals = decimals)
-   } else if (round(value, decimals) >= round(max_value, decimals))
-   {
-    result <- arrotonda(max_value - 10**(-1 * decimals), decimals = decimals)
-    equal_sign <- '>'
-   } else
-   {
-    result <- arrotonda(value, decimals = decimals)
-   }
-  } else
-  {
-   result <- arrotonda(value, decimals = decimals)
-  }
+  if (value > max_value) { value <- max_value }
+  equal_sign <- '>'
  }
- result <- paste(text, equal_sign, plus_sign, result, sep = '')
+ if (!is.infinite(min_value) & !is.na(min_value))
+ {
+  if (value < min_value) { value <- min_value }
+  equal_sign <- '<'
+ }
+ result <- arrotonda(value, decimals = decimals)
  return(result)
 }
 
