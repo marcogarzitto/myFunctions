@@ -48,6 +48,7 @@ give_nice <- function (value = NA, decimals = 3, text = '', with_equal_sign = FA
   equal_sign <- '<'
  }
  result <- arrotonda(value, decimals = decimals)
+ result <- paste(text, equal_sign, plus_sign, result, sep = '')
  return(result)
 }
 
