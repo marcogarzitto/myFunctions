@@ -80,7 +80,7 @@ give_nice_p <- function (value = NA, decimals = 3, with_p = TRUE, with_equal_sig
   if (value < multiple_alphas[2]) { stars <- paste(stars, '*', sep = '') }
   if (value < multiple_alphas[3]) { stars <- paste(stars, '*', sep = '') }
  }
- min_value = 0 - 10**(-1 * (decimals + 1))
+ min_value = 10**(-1 * (decimals))
  max_value = 1
  result <- give_nice(text = text, value = value, decimals = decimals, with_equal_sign = with_equal_sign, with_sign = FALSE, min_value = min_value, max_value = max_value, void_string = void_string)
  if (!give_only_stars) { result <- paste(result, stars, sep = '') } else { result <- stars }
