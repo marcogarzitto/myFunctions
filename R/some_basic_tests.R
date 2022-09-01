@@ -29,7 +29,7 @@ give_chisquare <- function (x = NA, y = NA, void_string = '-', alpha_value = 0.0
      (length(levels(ordered(as.character(XY$X)))) >= 2) & (length(levels(ordered(as.character(XY$Y)))) >= 2))
  {
   TEST <- chisq.test(XY$X, XY$Y)
-  out <- paste('\u03C7', '2',
+  out <- paste('\u03C7', '\u00B2',
                '(',
                TEST$parameter,
                ')',
@@ -83,9 +83,9 @@ give_fisher <- function (x = NA, y = NA, void_string = '-', alpha_value = 0.050,
                give_nice(value = abs(TEST$estimate), decimals = 3, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string),
                ' ',
                '(',
-               give_nice(value = abs(TEST$conf.int[1]), decimals = 2, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string),
+               give_nice(value = abs(TEST$conf.int[1]), decimals = 3, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string),
                ', ',
-               give_nice(value = abs(TEST$conf.int[2]), decimals = 2, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string),
+               give_nice(value = abs(TEST$conf.int[2]), decimals = 3, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string),
                ')',
                ',',
                ' ',
