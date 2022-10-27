@@ -20,7 +20,8 @@ add_categorical_variable_from_raw_input <- function (name_in = '', acronym = '',
         levels(OUT) <- levels_out
         levels_out <- levels(OUT)
         if (length(levels_out) > 1) { contrasts(OUT) <- contr.treatment(length(levels_out), base = 1) }
-        Hmisc::label(OUT) <- paste(acronym, if (acronym != '') { ', ' }, variable_description, ' ', '[', paste(levels_out, collapse = '/'), ']', sep = '')
+        if (length(levels_out) == 2) { options <- paste(levels_out, collapse = '/') } else { options <- 'options' }
+        Hmisc::label(OUT) <- paste(acronym, if (acronym != '') { ', ' }, variable_description, ' ', '[', options, ']', sep = '')
  return(OUT)
 }
 
@@ -54,14 +55,18 @@ add_date_variable_from_raw_input <- function (name_in = '', acronym = '', variab
 #' @param file_name .
 #' @param where .
 #' @param row_names .
+#' @param with_csv .
 #' @param fileEncoding .
 #' @return .
 #' @export
-save_table <- function (what, file_name = 'DF', where = getwd(), row_names = FALSE, fileEncoding = 'latin1')
+save_table <- function (what, file_name = 'DF', where = getwd(), row_names = FALSE, with_csv = FALSE, fileEncoding = 'latin1')
 {
  save(what, file = paste(where, '/', file_name, '.RData', sep = ''))
- write.table(what, file = paste(where, '/', file_name, '.csv', sep = ''), sep = ',', dec = '.', row.names = row_names, quote = TRUE, fileEncoding = fileEncoding)
- write.table(what, file = paste(where, '/', file_name, '_IT', '.csv', sep = ''), sep = ';', dec = ',', row.names = row_names, quote = TRUE, fileEncoding = fileEncoding)
+ if (with_csv)
+ {
+  write.table(what, file = paste(where, '/', file_name, '.csv', sep = ''), sep = ',', dec = '.', row.names = row_names, quote = TRUE, fileEncoding = fileEncoding)
+  write.table(what, file = paste(where, '/', file_name, '_IT', '.csv', sep = ''), sep = ';', dec = ',', row.names = row_names, quote = TRUE, fileEncoding = fileEncoding)  
+ }
  xlsx::write.xlsx(what, file = paste(where, '/', file_name, '.xlsx', sep = ''), sheetName = file_name, row.names = row_names, showNA = FALSE)
 }
 

@@ -9,6 +9,7 @@ save_table(
   file_name = "DF",
   where = getwd(),
   row_names = FALSE,
+  with_csv = FALSE,
   fileEncoding = "latin1"
 )
 }
@@ -20,6 +21,8 @@ save_table(
 \item{where}{.}
 
 \item{row_names}{.}
+
+\item{with_csv}{.}
 
 \item{fileEncoding}{.}
 }
