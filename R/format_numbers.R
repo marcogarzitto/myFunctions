@@ -193,7 +193,7 @@ give_nice_standard <- function (value = NA, decimals = 1, text = 'Standard', sta
 #' @param void_string Stringa da usare se il numero non c'è.
 #' @return Una stringa rappresentante il valore T, con vari abbellimenti.
 #' @export
-give_nice_percent <- function (value = NA, decimals = 2, text = '', percent_sign = TRUE, min_value = 0, max_value = 100, with_equal_sign = FALSE, with_sign = FALSE, void_string = '-')
+give_nice_percent <- function (value = NA, decimals = 2, text = '', percent_sign = TRUE, min_value = -100, max_value = 100, with_equal_sign = FALSE, with_sign = FALSE, void_string = '-')
 {
  if (text != '') { with_equal_sign = TRUE }
  if (percent_sign) { percent_sign = '%' } else { percent_sign = '' }

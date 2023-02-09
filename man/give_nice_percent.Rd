@@ -9,7 +9,7 @@ give_nice_percent(
   decimals = 2,
   text = "",
   percent_sign = TRUE,
-  min_value = 0,
+  min_value = -100,
   max_value = 100,
   with_equal_sign = FALSE,
   with_sign = FALSE,
