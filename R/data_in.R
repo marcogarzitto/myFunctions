@@ -22,6 +22,8 @@ add_categorical_variable_from_raw_input <- function (name_in = '', acronym = '',
         if (length(levels_out) > 1) { contrasts(OUT) <- contr.treatment(length(levels_out), base = 1) }
         if (length(levels_out) == 2) { options <- paste(levels_out, collapse = '/') } else { options <- 'options' }
         Hmisc::label(OUT) <- paste(acronym, if (acronym != '') { ', ' }, variable_description, ' ', '[', options, ']', sep = '')
+        #
+        Hmisc::label(OUT) <- paste(acronym, if (acronym != '') { ', ' }, variable_description, sep = '')
  return(OUT)
 }
 
