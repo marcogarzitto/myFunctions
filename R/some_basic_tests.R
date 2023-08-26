@@ -45,12 +45,24 @@ give_chisquare <- function (x = NA, y = NA, void_string = '-', alpha_value = 0.0
   {
    if (prop.table(table(XY$X, XY$Y), 2)[2, 1] > prop.table(table(XY$X, XY$Y), 2)[2, 2]) { comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], '>', levels(XY$Y)[2], sep = '') }
    if (prop.table(table(XY$X, XY$Y), 2)[2, 1] < prop.table(table(XY$X, XY$Y), 2)[2, 2]) { comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], '<', levels(XY$Y)[2], sep = '') }
+   #
+   effect_size <- rcompanion::cramerV(table(XY$X, XY$Y), ci = TRUE)
+   effect_size_interpretation <- ''
+   if ((effect_size$Cramer.V <= 0.2)) { effect_size_interpretation <- 'Small effect' }
+   if ((effect_size$Cramer.V  > 0.2) & (effect_size$Cramer.V <= 0.6)) { effect_size_interpretation <- 'Moderate effect' }
+   if ((effect_size$Cramer.V  > 0.6)) { effect_size_interpretation <- 'Large effect' }
+   effect_size <- paste(give_nice(effect_size$Cramer.V, decimals = 3, text = "Cramer's V", with_equal_sign = TRUE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string),
+                        ' ', '(', give_nice(effect_size$lower.ci, decimals = 3, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string),
+                        ',', ' ', give_nice(effect_size$upper.ci, decimals = 3, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string), ')',
+                        ',', ' ', effect_size_interpretation,
+                        sep = '')
   } else
   {
    comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], '=', levels(XY$Y)[2], sep = '')
+   effect_size <- void_string
   }
  }
- return(c(out, p_value, comparison))
+ return(c(out, p_value, comparison, effect_size))
 }
 
 #' give_fisher
@@ -96,12 +108,24 @@ give_fisher <- function (x = NA, y = NA, void_string = '-', alpha_value = 0.050,
   {
    if (prop.table(table(XY$X, XY$Y), 2)[2, 1] > prop.table(table(XY$X, XY$Y), 2)[2, 2]) { comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], '>', levels(XY$Y)[2], sep = '') }
    if (prop.table(table(XY$X, XY$Y), 2)[2, 1] < prop.table(table(XY$X, XY$Y), 2)[2, 2]) { comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], '<', levels(XY$Y)[2], sep = '') }
+   #
+   effect_size <- rcompanion::cramerV(table(XY$X, XY$Y), ci = TRUE)
+   effect_size_interpretation <- ''
+   if ((effect_size$Cramer.V <= 0.1)) { effect_size_interpretation <- 'Small effect' }
+   if ((effect_size$Cramer.V  > 0.3) & (effect_size$Cramer.V <= 0.5)) { effect_size_interpretation <- 'Moderate effect' }
+   if ((effect_size$Cramer.V  > 0.5)) { effect_size_interpretation <- 'Large effect' }
+   effect_size <- paste(give_nice(effect_size$Cramer.V, decimals = 3, text = '\u03C6', with_equal_sign = TRUE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string),
+                        ' ', '(', give_nice(effect_size$lower.ci, decimals = 3, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string),
+                        ',', ' ', give_nice(effect_size$upper.ci, decimals = 3, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string), ')',
+                        ',', ' ', effect_size_interpretation,
+                        sep = '')
   } else
   {
    comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], '=', levels(XY$Y)[2], sep = '')
+   effect_size <- void_string
   }
  }
- return(c(out, p_value, comparison))
+ return(c(out, p_value, comparison, effect_size))
 }
 
 #' give_categorical_test
@@ -122,8 +146,11 @@ give_categorical_test <- function (x = NA, y = NA, void_string = '-', alpha_valu
  XY <- na.omit(data.frame(X = x, Y = y))
  result <- void_string
  fisher <- give_fisher(x = XY$X, y = XY$Y, void_string = void_string, alpha_value = alpha_value, multiple_alphas = multiple_alphas)
- chisquare <- give_chisquare(x = XY$X, y = XY$Y, void_string = void_string, alpha_value = alpha_value, multiple_alphas = multiple_alphas)
- if (is.na(fisher[2])) { result <- chisquare } else { result <- fisher }
+ if (is.na(fisher[2]))
+ {
+  chisquare <- give_chisquare(x = XY$X, y = XY$Y, void_string = void_string, alpha_value = alpha_value, multiple_alphas = multiple_alphas)
+  result <- chisquare
+ } else { result <- fisher }
  return(result)
 }
 
@@ -161,13 +188,16 @@ give_ttest <- function (y = NA, group = NA, void_string = '-', alpha_value = 0.0
   {
    if (mean(DATA$Y[DATA$G == levels(group)[1]], na.rm = TRUE) > mean(DATA$Y[DATA$G == levels(group)[2]], na.rm = TRUE)) { comparison <- paste(levels(group)[1], '>', levels(group)[2], sep = '') }
    if (mean(DATA$Y[DATA$G == levels(group)[1]], na.rm = TRUE) < mean(DATA$Y[DATA$G == levels(group)[2]], na.rm = TRUE)) { comparison <- paste(levels(group)[1], '<', levels(group)[2], sep = '') }
+   #
+   effect_size <- 'DA-FARE'
   } else
   {
    comparison <- paste(levels(group)[1], '=', levels(group)[2], sep = '')
+   effect_size <- void_string
   }
-  result <- c(result, TEST$p.value, comparison)
+  result <- c(result, TEST$p.value, comparison, effect_size)
   return(result)
- } else { return(c(void_string, NA, NA)) }
+ } else { return(c(void_string, NA, void_string, void_string)) }
 }
 
 #' give_mannwhitney
@@ -196,13 +226,16 @@ give_mannwhitney <- function (y = NA, group = NA, void_string = '-', alpha_value
   {
    if (mean(DATA$Y[DATA$G == levels(group)[1]], na.rm = TRUE) > mean(DATA$Y[DATA$G == levels(group)[2]], na.rm = TRUE)) { comparison <- paste(levels(group)[1], '>', levels(group)[2], sep = '') }
    if (mean(DATA$Y[DATA$G == levels(group)[1]], na.rm = TRUE) < mean(DATA$Y[DATA$G == levels(group)[2]], na.rm = TRUE)) { comparison <- paste(levels(group)[1], '<', levels(group)[2], sep = '') }
+   #
+   effect_size <- 'DA-FARE'
   } else
   {
    comparison <- paste(levels(group)[1], '=', levels(group)[2], sep = '')
+   effect_size <- void_string
   }
-  result <- c(result, TEST$p.value, comparison)
+  result <- c(result, TEST$p.value, comparison, effect_size)
   return(result)
- } else { return(c(void_string, NA, NA)) }
+ } else { return(c(void_string, NA, void_string, void_string)) }
 }
 
 #' give_continuous_test_2group_b
@@ -223,11 +256,17 @@ give_continuous_test_2group_b <- function (y = NA, group = NA, void_string = '-'
  if ((min(table(DATA$G)) >= 3) & (sd(DATA$Y) > 0))
  {
   LEV <- car::leveneTest(Y ~ G, data = DATA, center = median)
-  PAR <- give_ttest(y = DATA$Y, group = DATA$G, void_string = void_string, alpha_value = alpha_value, multiple_alphas = multiple_alphas)
-  NPAR <- give_mannwhitney(y = DATA$Y, group = DATA$G, void_string = void_string, alpha_value = alpha_value, multiple_alphas = multiple_alphas)
-  if (LEV$'Pr(>F)'[1] < 0.050) { result <- NPAR } else { result <- PAR }
+  if (LEV$'Pr(>F)'[1] < 0.050)
+  {
+   NPAR <- give_mannwhitney(y = DATA$Y, group = DATA$G, void_string = void_string, alpha_value = alpha_value, multiple_alphas = multiple_alphas)
+   result <- NPAR
+  } else
+  {
+   PAR <- give_ttest(y = DATA$Y, group = DATA$G, void_string = void_string, alpha_value = alpha_value, multiple_alphas = multiple_alphas)
+   result <- PAR
+  }
   return(result)
- } else { return(c(void_string, NA, NA)) }
+ } else { return(c(void_string, NA, void_string, void_string)) }
 }
 
 #
