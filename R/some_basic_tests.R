@@ -52,8 +52,8 @@ give_chisquare <- function (x = NA, y = NA, void_string = '-', alpha_value = 0.0
    effect_size_first$lower.ci <- NA
    effect_size_first$upper.ci <- NA
    effect_size <- try(rcompanion::cramerV(table(XY$X, XY$Y), ci = TRUE))
-   if (is.na(effect_size)) { effect_size <- effect_size_first }
-   effect_size_interpretation <- ''
+   if (inherits(effect_size, 'try-error')) { effect_size <- effect_size_first }
+   effect_size_interpretation <- void_string
    if ((effect_size$Cramer.V <= 0.2)) { effect_size_interpretation <- 'Small effect' }
    if ((effect_size$Cramer.V  > 0.2) & (effect_size$Cramer.V <= 0.6)) { effect_size_interpretation <- 'Moderate effect' }
    if ((effect_size$Cramer.V  > 0.6)) { effect_size_interpretation <- 'Large effect' }
@@ -121,8 +121,8 @@ give_fisher <- function (x = NA, y = NA, void_string = '-', alpha_value = 0.050,
    effect_size_first$lower.ci <- NA
    effect_size_first$upper.ci <- NA
    effect_size <- try(rcompanion::cramerV(table(XY$X, XY$Y), ci = TRUE))
-   if (is.na(effect_size)) { effect_size <- effect_size_first }
-   effect_size_interpretation <- ''
+   if (inherits(effect_size, 'try-error')) { effect_size <- effect_size_first }
+   effect_size_interpretation <- void_string
    if ((effect_size$Cramer.V <= 0.1)) { effect_size_interpretation <- 'Small effect' }
    if ((effect_size$Cramer.V  > 0.3) & (effect_size$Cramer.V <= 0.5)) { effect_size_interpretation <- 'Moderate effect' }
    if ((effect_size$Cramer.V  > 0.5)) { effect_size_interpretation <- 'Large effect' }
