@@ -45,21 +45,20 @@ give_chisquare <- function (x = NA, y = NA, void_string = '-', alpha_value = 0.0
   p_value <- TEST$p.value
   if (p_value < alpha_value)
   {
-   if (prop.table(table(XY$X, XY$Y), 2)[2, 1] > prop.table(table(XY$X, XY$Y), 2)[2, 2]) { comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], '>', levels(XY$Y)[2], sep = '') }
-   if (prop.table(table(XY$X, XY$Y), 2)[2, 1] < prop.table(table(XY$X, XY$Y), 2)[2, 2]) { comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], '<', levels(XY$Y)[2], sep = '') }
+   comparison <- 'DA-FARE'
    #
-   effect_size_first <- rcompanion::cramerV(table(XY$X, XY$Y), ci = FALSE)
+   effect_size_first <- as.list(rcompanion::cramerV(table(XY$X, XY$Y), ci = FALSE))
    effect_size_first$lower.ci <- NA
    effect_size_first$upper.ci <- NA
-   effect_size <- try(rcompanion::cramerV(table(XY$X, XY$Y), ci = TRUE))
+   effect_size <- try(as.list(rcompanion::cramerV(table(XY$X, XY$Y), ci = TRUE)), silent = TRUE)
    if (inherits(effect_size, 'try-error')) { effect_size <- effect_size_first }
    effect_size_interpretation <- void_string
-   if ((effect_size$Cramer.V <= 0.2)) { effect_size_interpretation <- 'Small effect' }
-   if ((effect_size$Cramer.V  > 0.2) & (effect_size$Cramer.V <= 0.6)) { effect_size_interpretation <- 'Moderate effect' }
-   if ((effect_size$Cramer.V  > 0.6)) { effect_size_interpretation <- 'Large effect' }
-   effect_size <- paste(give_nice(effect_size$Cramer.V, decimals = 3, text = "Cramer's V", with_equal_sign = TRUE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string),
-                        ' ', '(', give_nice(effect_size$lower.ci, decimals = 3, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string),
-                        ',', ' ', give_nice(effect_size$upper.ci, decimals = 3, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string), ')',
+   if (!is.na(effect_size[1]) & (effect_size[1] <= 0.2)) { effect_size_interpretation <- 'Small effect' }
+   if (!is.na(effect_size[1]) & (effect_size[1]  > 0.2) & (effect_size[1] <= 0.6)) { effect_size_interpretation <- 'Moderate effect' }
+   if (!is.na(effect_size[1]) & (effect_size[1]  > 0.6)) { effect_size_interpretation <- 'Large effect' }
+   effect_size <- paste(give_nice(effect_size[1], decimals = 3, text = "Cramer's V", with_equal_sign = TRUE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string),
+                        ' ', '(', give_nice(effect_size[2], decimals = 3, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string),
+                        ',', ' ', give_nice(effect_size[3], decimals = 3, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string), ')',
                         ',', ' ', effect_size_interpretation,
                         sep = '')
   } else
@@ -117,18 +116,18 @@ give_fisher <- function (x = NA, y = NA, void_string = '-', alpha_value = 0.050,
    if (prop.table(table(XY$X, XY$Y), 2)[2, 1] > prop.table(table(XY$X, XY$Y), 2)[2, 2]) { comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], '>', levels(XY$Y)[2], sep = '') }
    if (prop.table(table(XY$X, XY$Y), 2)[2, 1] < prop.table(table(XY$X, XY$Y), 2)[2, 2]) { comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], '<', levels(XY$Y)[2], sep = '') }
    #
-   effect_size_first <- rcompanion::cramerV(table(XY$X, XY$Y), ci = FALSE)
+   effect_size_first <- as.list(rcompanion::cramerV(table(XY$X, XY$Y), ci = FALSE))
    effect_size_first$lower.ci <- NA
    effect_size_first$upper.ci <- NA
-   effect_size <- try(rcompanion::cramerV(table(XY$X, XY$Y), ci = TRUE))
+   effect_size <- try(as.list(rcompanion::cramerV(table(XY$X, XY$Y), ci = TRUE)), silent = TRUE)
    if (inherits(effect_size, 'try-error')) { effect_size <- effect_size_first }
    effect_size_interpretation <- void_string
-   if ((effect_size$Cramer.V <= 0.1)) { effect_size_interpretation <- 'Small effect' }
-   if ((effect_size$Cramer.V  > 0.3) & (effect_size$Cramer.V <= 0.5)) { effect_size_interpretation <- 'Moderate effect' }
-   if ((effect_size$Cramer.V  > 0.5)) { effect_size_interpretation <- 'Large effect' }
-   effect_size <- paste(give_nice(effect_size$Cramer.V, decimals = 3, text = '\u03C6', with_equal_sign = TRUE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string),
-                        ' ', '(', give_nice(effect_size$lower.ci, decimals = 3, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string),
-                        ',', ' ', give_nice(effect_size$upper.ci, decimals = 3, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string), ')',
+   if (!is.na(effect_size[1]) & (effect_size[1] <= 0.2)) { effect_size_interpretation <- 'Small effect' }
+   if (!is.na(effect_size[1]) & (effect_size[1]  > 0.2) & (effect_size[1] <= 0.6)) { effect_size_interpretation <- 'Moderate effect' }
+   if (!is.na(effect_size[1]) & (effect_size[1]  > 0.6)) { effect_size_interpretation <- 'Large effect' }
+   effect_size <- paste(give_nice(effect_size[1], decimals = 3, text = '\u03C6', with_equal_sign = TRUE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string),
+                        ' ', '(', give_nice(effect_size[2], decimals = 3, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string),
+                        ',', ' ', give_nice(effect_size[3], decimals = 3, text = '', with_equal_sign = FALSE, with_sign = FALSE, min_value = 0.001, max_value = 1000, void_string = void_string), ')',
                         ',', ' ', effect_size_interpretation,
                         sep = '')
   } else
