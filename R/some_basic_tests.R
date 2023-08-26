@@ -13,12 +13,14 @@ give_chisquare <- function (x = NA, y = NA, void_string = '-', alpha_value = 0.0
 {
  out <- void_string
  p_value <- NA
- comparison <- '-'
+ comparison <- void_string
+ effect_size <- void_string
  note <- ''
- if (length(x) != length(y)) { return(c(out, p_value)) }
+ if (length(x) != length(y)) { return(c(out, p_value, comparison, effect_size)) }
  if (!is.factor(x)) { x <- ordered(x) }
  if (!is.factor(y)) { y <- ordered(y) }
  XY <- na.omit(data.frame(X = x, Y = y))
+ if (identical(XY$X, XY$Y)) { return(c(out, p_value, comparison, effect_size)) }
  EXPECTED <- ((as.matrix(apply(table(XY), 2, sum)) %*% apply(table(XY), 1, sum)) / sum(table(XY)))
  if (sum(!apply(EXPECTED, 1, is.na)) > 0)
  {
@@ -80,11 +82,13 @@ give_fisher <- function (x = NA, y = NA, void_string = '-', alpha_value = 0.050,
 {
  out <- void_string
  p_value <- NA
- comparison <- '-'
- if (length(x) != length(y)) { return(c(out, p_value)) }
+ comparison <- void_string
+ effect_size <- void_string
+ if (length(x) != length(y)) { return(c(out, p_value, comparison, effect_size)) }
  if (!is.factor(x)) { x <- ordered(x) }
  if (!is.factor(y)) { y <- ordered(y) }
  XY <- na.omit(data.frame(X = x, Y = y))
+ if (identical(XY$X, XY$Y)) { return(c(out, p_value, comparison, effect_size)) }
  if ((length(levels(XY$X)) == 2) & (length(levels(XY$Y)) == 2)
      &
      (length(levels(ordered(as.character(XY$X)))) == 2) & (length(levels(ordered(as.character(XY$Y)))) == 2))
