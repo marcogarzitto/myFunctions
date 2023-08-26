@@ -48,7 +48,11 @@ give_chisquare <- function (x = NA, y = NA, void_string = '-', alpha_value = 0.0
    if (prop.table(table(XY$X, XY$Y), 2)[2, 1] > prop.table(table(XY$X, XY$Y), 2)[2, 2]) { comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], '>', levels(XY$Y)[2], sep = '') }
    if (prop.table(table(XY$X, XY$Y), 2)[2, 1] < prop.table(table(XY$X, XY$Y), 2)[2, 2]) { comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], '<', levels(XY$Y)[2], sep = '') }
    #
-   effect_size <- rcompanion::cramerV(table(XY$X, XY$Y), ci = TRUE)
+   effect_size_first <- rcompanion::cramerV(table(XY$X, XY$Y), ci = FALSE)
+   effect_size_first$lower.ci <- NA
+   effect_size_first$upper.ci <- NA
+   effect_size <- try(rcompanion::cramerV(table(XY$X, XY$Y), ci = TRUE))
+   if (is.na(effect_size)) { effect_size <- effect_size_first }
    effect_size_interpretation <- ''
    if ((effect_size$Cramer.V <= 0.2)) { effect_size_interpretation <- 'Small effect' }
    if ((effect_size$Cramer.V  > 0.2) & (effect_size$Cramer.V <= 0.6)) { effect_size_interpretation <- 'Moderate effect' }
@@ -113,7 +117,11 @@ give_fisher <- function (x = NA, y = NA, void_string = '-', alpha_value = 0.050,
    if (prop.table(table(XY$X, XY$Y), 2)[2, 1] > prop.table(table(XY$X, XY$Y), 2)[2, 2]) { comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], '>', levels(XY$Y)[2], sep = '') }
    if (prop.table(table(XY$X, XY$Y), 2)[2, 1] < prop.table(table(XY$X, XY$Y), 2)[2, 2]) { comparison <- paste(levels(XY$X)[2], ': ', levels(XY$Y)[1], '<', levels(XY$Y)[2], sep = '') }
    #
-   effect_size <- rcompanion::cramerV(table(XY$X, XY$Y), ci = TRUE)
+   effect_size_first <- rcompanion::cramerV(table(XY$X, XY$Y), ci = FALSE)
+   effect_size_first$lower.ci <- NA
+   effect_size_first$upper.ci <- NA
+   effect_size <- try(rcompanion::cramerV(table(XY$X, XY$Y), ci = TRUE))
+   if (is.na(effect_size)) { effect_size <- effect_size_first }
    effect_size_interpretation <- ''
    if ((effect_size$Cramer.V <= 0.1)) { effect_size_interpretation <- 'Small effect' }
    if ((effect_size$Cramer.V  > 0.3) & (effect_size$Cramer.V <= 0.5)) { effect_size_interpretation <- 'Moderate effect' }
